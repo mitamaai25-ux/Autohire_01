@@ -149,6 +149,7 @@ body {
 
 .btn:hover {
   transform: translateY(-2px) scale(1.01);
+  transform: translateY(-2px);
 }
 
 .btn-primary {
@@ -203,6 +204,11 @@ body {
 
 .interactive-card:hover {
   transform: rotateX(8deg) rotateY(-8deg) translateY(-7px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.interactive-card:hover {
+  transform: translateY(-5px);
   box-shadow: 0 0 24px rgba(90, 140, 255, 0.32);
 }
 
@@ -211,6 +217,7 @@ body {
   border: 1px solid rgba(114, 148, 255, 0.35);
   border-radius: 22px;
   min-height: 300px;
+  min-height: 270px;
   position: relative;
   overflow: hidden;
   display: grid;
@@ -350,6 +357,7 @@ body {
   border-color: #67a4ff;
   box-shadow: 0 0 25px rgba(95, 154, 255, 0.38);
   transform: translateY(-4px) rotateX(4deg);
+  transform: translateY(-4px);
 }
 
 .site-footer {
@@ -374,6 +382,7 @@ body {
   gap: 0.6rem;
 }
 
+/* Auth/dashboard legacy styles */
 .page {
   min-height: 100vh;
   display: grid;
@@ -442,6 +451,10 @@ input {
   }
   50% {
     transform: translateY(-10px) translateZ(150px);
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
   }
 }
 
