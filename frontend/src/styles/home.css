@@ -1,0 +1,247 @@
+:root {
+  font-family: Inter, 'Segoe UI', system-ui, sans-serif;
+  color: #e9efff;
+  background: #030f2c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 20% 10%, #10295f 0%, #030f2c 50%, #020818 100%);
+}
+
+.onboarding-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.onboarding-shell {
+  width: min(980px, 100%);
+  background: linear-gradient(170deg, rgba(4, 23, 57, 0.95), rgba(3, 14, 36, 0.95));
+  border: 1px solid rgba(117, 156, 255, 0.4);
+  border-radius: 18px;
+  padding: 1.2rem 1.6rem;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.35);
+}
+
+.onboarding-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 0.92rem;
+  letter-spacing: 0.03em;
+}
+
+.ghost-btn {
+  border: none;
+  background: transparent;
+  color: #bed0ff;
+  cursor: pointer;
+}
+
+.progress-rails {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.rail {
+  height: 3px;
+  border-radius: 999px;
+  background: rgba(101, 74, 191, 0.5);
+}
+
+.rail.active {
+  background: linear-gradient(90deg, #ffd27a, #b88b35);
+}
+
+.step-label {
+  color: #9fb6eb;
+  font-size: 0.9rem;
+  margin: 0.8rem 0 0;
+}
+
+.onboarding-icon {
+  margin: 1.5rem auto 0.7rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  background: rgba(64, 52, 132, 0.55);
+  border: 1px solid rgba(130, 137, 255, 0.45);
+}
+
+h1 {
+  margin: 0;
+  text-align: center;
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+}
+
+.subtitle {
+  text-align: center;
+  color: #bbcbf2;
+  margin: 0.5rem 0 1.4rem;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.option-card {
+  text-align: left;
+  border-radius: 12px;
+  border: 1px solid rgba(94, 120, 168, 0.35);
+  background: linear-gradient(140deg, rgba(31, 34, 42, 0.95), rgba(22, 24, 32, 0.95));
+  color: #ecf2ff;
+  padding: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.option-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(133, 176, 255, 0.6);
+}
+
+.option-card.selected {
+  border-color: #72a7ff;
+  box-shadow: 0 0 0 1px #72a7ff, 0 10px 24px rgba(81, 142, 255, 0.25);
+}
+
+.option-card strong {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.option-card span {
+  color: #aebbd8;
+  font-size: 0.9rem;
+}
+
+.onboarding-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.4rem;
+}
+
+.nav-btn {
+  border: none;
+  border-radius: 10px;
+  padding: 0.62rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nav-btn.back {
+  background: transparent;
+  color: #d5e1ff;
+}
+
+.nav-btn.continue {
+  background: linear-gradient(90deg, #b49455, #d7b97a);
+  color: #1f2430;
+}
+
+.nav-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Existing auth/dashboard pages support */
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+  background: rgba(14, 24, 55, 0.72);
+  border: 1px solid rgba(127, 160, 255, 0.28);
+  border-radius: 16px;
+  padding: 1.2rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+label {
+  font-weight: 600;
+}
+
+input {
+  padding: 0.7rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(144, 174, 243, 0.45);
+  background: rgba(12, 19, 44, 0.65);
+  color: #fff;
+}
+
+.btn {
+  border-radius: 10px;
+  border: none;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #3a69f7;
+  color: #fff;
+}
+
+.btn-secondary {
+  background: #e4e7ec;
+  color: #101828;
+}
+
+.error {
+  color: #ff8f9a;
+}
+
+.success {
+  color: #8de9b6;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-grid {
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.stats-grid article {
+  background: rgba(109, 153, 255, 0.12);
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 11px;
+  padding: 0.7rem;
+}
+
+@media (max-width: 768px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
