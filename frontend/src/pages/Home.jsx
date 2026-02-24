@@ -47,9 +47,9 @@ function Home() {
       <section className="hero" id="hero">
         <div className="hero-bg">
           <div className="globe" />
+          <div className="neural-grid" />
           <div className="ring ring-1" />
           <div className="ring ring-2" />
-          <div className="neural-grid" />
           <div className="depth-shadow" />
         </div>
         <div className="hero-content">
