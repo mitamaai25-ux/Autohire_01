@@ -36,9 +36,22 @@ const onboardingSteps = [
   },
 ];
 
+const aiSuggestions = [
+  'Try vertical format for better engagement on reels',
+  'Add captions to increase watch time by 40%',
+  'Use cinematic color grading for a professional look',
+];
+
+const recentProjects = [
+  { title: 'Summer Vlog 2024', meta: 'Edited 2 hours ago', time: '12:34' },
+  { title: 'Product Review', meta: 'Edited yesterday', time: '8:45' },
+  { title: 'Tutorial Series', meta: 'Edited 3 days ago', time: '15:22' },
+];
+
 function Home() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [completed, setCompleted] = useState(false);
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
@@ -57,8 +70,80 @@ function Home() {
       return;
     }
 
-    alert(`Onboarding completed!\nSelections:\n${Object.values(answers).join(' • ')}`);
+    setCompleted(true);
   };
+
+  if (completed) {
+    return (
+      <main className="workspace-page">
+        <aside className="workspace-sidebar">
+          <strong className="brand">AutoHire</strong>
+          <nav>
+            <button className="side-item active" type="button">
+              Projects
+            </button>
+            <button className="side-item" type="button">
+              AI Studio
+            </button>
+            <button className="side-item" type="button">
+              Settings
+            </button>
+          </nav>
+          <article className="pro-box">
+            <h4>Pro Features</h4>
+            <p>Unlock advanced AI optimization</p>
+            <button className="nav-btn continue" type="button">
+              Upgrade
+            </button>
+          </article>
+        </aside>
+
+        <section className="workspace-main">
+          <h1>Welcome back 👋</h1>
+          <p className="subtitle">Ready to create something amazing?</p>
+
+          <div className="workspace-actions">
+            <article className="action-card">
+              <h3>New Project</h3>
+              <p>Start editing a new video</p>
+            </article>
+            <article className="action-card upload">
+              <h3>Upload Video</h3>
+              <p>Drag & drop or click to browse</p>
+            </article>
+          </div>
+
+          <section>
+            <h2 className="workspace-title">AI Suggestions</h2>
+            <div className="tips-grid">
+              {aiSuggestions.map((tip) => (
+                <article className="tip-card" key={tip}>
+                  {tip}
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section>
+            <h2 className="workspace-title">Recent Projects</h2>
+            <div className="recent-grid">
+              {recentProjects.map((project) => (
+                <article className="project-card" key={project.title}>
+                  <div className="project-thumb">
+                    <span>{project.time}</span>
+                  </div>
+                  <div className="project-info">
+                    <h4>{project.title}</h4>
+                    <p>{project.meta}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        </section>
+      </main>
+    );
+  }
 
   return (
     <main className="onboarding-page">

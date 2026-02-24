@@ -16,6 +16,33 @@ const features = [
   },
 ];
 
+const personas = [
+  {
+    id: 'employer',
+    label: 'Employer',
+    previewTitle: 'Employer Command Center',
+    previewItems: ['Candidate fit shortlists', 'Interview readiness score', 'Offer acceptance likelihood'],
+  },
+  {
+    id: 'freelancer',
+    label: 'Freelancer',
+    previewTitle: 'Freelancer Growth Dashboard',
+    previewItems: ['Profile optimization tips', 'Bid win probability', 'Skill demand heatmap'],
+  },
+  {
+    id: 'recruiter',
+    label: 'Recruiter',
+    previewTitle: 'Recruiter Pipeline Studio',
+    previewItems: ['Multi-role talent pools', 'Pipeline stage velocity', 'Placement confidence analytics'],
+  },
+  {
+    id: 'enterprise_hr',
+    label: 'Enterprise HR',
+    previewTitle: 'Enterprise Workforce Intelligence',
+    previewItems: ['Org-wide hiring risk matrix', 'Retention and mobility forecasts', 'Compensation band confidence'],
+  },
+];
+
 const explainablePillars = [
   {
     title: 'Fairness by Design',
@@ -39,11 +66,30 @@ const candidates = [
   { id: 'c5', name: 'Mia Johnson', role: 'Frontend Engineer' },
 ];
 
+const decisionMetrics = [
+  {
+    title: 'Hiring Risk Index',
+    value: 'Low · 18%',
+    detail: 'Risk engine flags delivery mismatch probability based on prior project volatility.',
+  },
+  {
+    title: 'Retention Probability',
+    value: '87%',
+    detail: 'Estimated long-term engagement confidence using behavior and project-fit signals.',
+  },
+  {
+    title: 'Salary Confidence',
+    value: '91%',
+    detail: 'Compensation recommendation confidence from market bands, role level, and skill depth.',
+  },
+];
+
 const jobRequirements = ['React', 'Node.js', 'Data modeling', 'API design', 'System thinking'];
 
 function Landing() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [phase, setPhase] = useState(0);
+  const [activePersona, setActivePersona] = useState(personas[0].id);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -55,7 +101,18 @@ function Landing() {
   }, []);
 
   const score = useMemo(() => 72 + ((phase * 7) % 26), [phase]);
-  const signal = useMemo(() => ['Analyzing profile vectors', 'Scoring skill adjacency', 'Predicting delivery confidence'][phase % 3], [phase]);
+  const signal = useMemo(
+    () =>
+      ['Analyzing profile vectors', 'Scoring skill adjacency', 'Predicting delivery confidence'][
+        phase % 3
+      ],
+    [phase]
+  );
+
+  const personaView = useMemo(
+    () => personas.find((persona) => persona.id === activePersona) || personas[0],
+    [activePersona]
+  );
 
   return (
     <main className="landing-page">
@@ -84,6 +141,37 @@ function Landing() {
             </Link>
           </div>
         </div>
+      </section>
+
+      <section className="persona-section">
+        <div className="xai-header">
+          <p className="badge">Persona Selection Flow</p>
+          <h2>Enter as Employer, Freelancer, Recruiter, or Enterprise HR</h2>
+          <p>Choose your role to preview the AI-tailored dashboard experience before onboarding.</p>
+        </div>
+
+        <div className="persona-tabs">
+          {personas.map((persona) => (
+            <button
+              className={`persona-tab ${activePersona === persona.id ? 'active' : ''}`}
+              key={persona.id}
+              onClick={() => setActivePersona(persona.id)}
+              type="button"
+            >
+              {persona.label}
+            </button>
+          ))}
+        </div>
+
+        <article className="persona-preview-card">
+          <h3>{personaView.previewTitle}</h3>
+          <p className="persona-preview-sub">Tailored dashboard preview for {personaView.label}</p>
+          <ul>
+            {personaView.previewItems.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </article>
       </section>
 
       <section className="feature-grid">
@@ -145,6 +233,26 @@ function Landing() {
               ))}
             </ul>
           </article>
+        </div>
+      </section>
+
+      <section className="decision-section">
+        <div className="xai-header">
+          <p className="badge">AI Decision Assistant</p>
+          <h2>Actionable Hiring Intelligence in Clean Analytics Cards</h2>
+          <p>
+            AutoHire converts match analysis into decision-ready metrics so teams can evaluate risk,
+            retention outlook, and compensation confidence at a glance.
+          </p>
+        </div>
+        <div className="decision-grid">
+          {decisionMetrics.map((metric) => (
+            <article className="decision-card" key={metric.title}>
+              <h3>{metric.title}</h3>
+              <p className="decision-value">{metric.value}</p>
+              <p>{metric.detail}</p>
+            </article>
+          ))}
         </div>
       </section>
 

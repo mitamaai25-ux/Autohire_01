@@ -104,6 +104,66 @@ body {
   margin-top: 1rem;
 }
 
+
+.persona-section {
+  max-width: 1100px;
+  margin: 1.8rem auto 0;
+  border: 1px solid rgba(116, 148, 255, 0.3);
+  border-radius: 18px;
+  background: linear-gradient(155deg, rgba(10, 20, 46, 0.84), rgba(8, 14, 34, 0.84));
+  padding: 1.3rem;
+}
+
+.persona-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.persona-tab {
+  border: 1px solid rgba(126, 158, 255, 0.35);
+  border-radius: 999px;
+  background: rgba(25, 36, 72, 0.72);
+  color: #d7e3ff;
+  padding: 0.45rem 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.persona-tab:hover {
+  transform: translateY(-1px);
+}
+
+.persona-tab.active {
+  border-color: #7ad5ff;
+  box-shadow: 0 0 14px rgba(122, 213, 255, 0.35);
+  background: rgba(35, 56, 115, 0.85);
+}
+
+.persona-preview-card {
+  border: 1px solid rgba(124, 157, 255, 0.3);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(145deg, rgba(19, 31, 67, 0.84), rgba(11, 20, 47, 0.84));
+}
+
+.persona-preview-card h3 {
+  margin: 0 0 0.2rem;
+}
+
+.persona-preview-sub {
+  margin: 0 0 0.7rem;
+  color: #a9bee9;
+}
+
+.persona-preview-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: #b5c4ea;
+}
+
 .feature-grid {
   max-width: 1100px;
   margin: 1.6rem auto 0;
@@ -124,9 +184,6 @@ body {
   transform: translateY(-4px);
   box-shadow: 0 14px 32px rgba(56, 110, 232, 0.25);
 }
-
-
-
 
 .match-sim-section {
   max-width: 1100px;
@@ -234,6 +291,44 @@ body {
   margin: 0;
   padding-left: 1rem;
   color: #afc0ea;
+}
+
+.decision-section {
+  max-width: 1100px;
+  margin: 1.8rem auto 0;
+  border: 1px solid rgba(120, 150, 255, 0.3);
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(11, 20, 45, 0.84), rgba(8, 14, 34, 0.84));
+  padding: 1.3rem;
+}
+
+.decision-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0.85rem;
+}
+
+.decision-card {
+  border: 1px solid rgba(124, 157, 255, 0.3);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(145deg, rgba(19, 31, 67, 0.84), rgba(11, 20, 47, 0.84));
+  box-shadow: inset 0 0 0 1px rgba(121, 87, 255, 0.08);
+}
+
+.decision-card h3 {
+  margin: 0 0 0.35rem;
+}
+
+.decision-value {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #89dbff;
+}
+
+.decision-card p {
+  color: #b5c4ea;
 }
 
 .xai-section {
@@ -440,6 +535,129 @@ h1 {
   cursor: not-allowed;
 }
 
+
+.workspace-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  background: #121419;
+  border: 1px solid rgba(46, 149, 255, 0.75);
+}
+
+.workspace-sidebar {
+  background: linear-gradient(180deg, #081a3d, #091930);
+  border-right: 1px solid rgba(39, 138, 255, 0.35);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.workspace-sidebar nav {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.side-item {
+  background: transparent;
+  border: 1px solid rgba(107, 140, 219, 0.24);
+  color: #d3e0ff;
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.side-item.active {
+  background: rgba(95, 88, 210, 0.28);
+  border-color: rgba(133, 144, 255, 0.44);
+}
+
+.pro-box {
+  margin-top: auto;
+  border: 1px solid rgba(122, 146, 220, 0.3);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: rgba(19, 30, 62, 0.8);
+}
+
+.pro-box h4 {
+  margin: 0 0 0.35rem;
+}
+
+.pro-box p {
+  margin: 0 0 0.6rem;
+  color: #b3c4e8;
+  font-size: 0.9rem;
+}
+
+.workspace-main {
+  padding: 1.5rem;
+}
+
+.workspace-actions,
+.tips-grid,
+.recent-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.workspace-actions {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.action-card,
+.tip-card,
+.project-card {
+  border: 1px solid rgba(82, 112, 183, 0.33);
+  border-radius: 12px;
+  background: linear-gradient(150deg, rgba(8, 26, 63, 0.9), rgba(8, 17, 41, 0.9));
+  padding: 0.9rem;
+}
+
+.action-card.upload {
+  border-style: dashed;
+}
+
+.workspace-title {
+  font-size: 1.7rem;
+  margin: 1.25rem 0 0.65rem;
+}
+
+.tips-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.recent-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.project-thumb {
+  height: 120px;
+  border-radius: 9px;
+  background: linear-gradient(130deg, #5f7cb5, #8f6f3f);
+  display: grid;
+  align-items: end;
+  padding: 0.45rem;
+}
+
+.project-thumb span {
+  background: rgba(0, 0, 0, 0.52);
+  width: fit-content;
+  padding: 0.18rem 0.35rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+.project-info h4 {
+  margin: 0.6rem 0 0.2rem;
+}
+
+.project-info p {
+  margin: 0;
+  color: #b5c4ea;
+}
+
 /* Existing auth/dashboard pages support */
 .page {
   min-height: 100vh;
@@ -531,6 +749,19 @@ input {
 
   .connection {
     width: 34%;
+  }
+
+  .persona-tabs {
+    justify-content: flex-start;
+  }
+
+  .workspace-page {
+    grid-template-columns: 1fr;
+  }
+
+  .tips-grid,
+  .recent-grid {
+    grid-template-columns: 1fr;
   }
 }
 
