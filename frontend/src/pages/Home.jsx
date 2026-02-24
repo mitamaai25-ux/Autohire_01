@@ -48,6 +48,9 @@ function Home() {
         <div className="hero-bg">
           <div className="globe" />
           <div className="neural-grid" />
+          <div className="ring ring-1" />
+          <div className="ring ring-2" />
+          <div className="depth-shadow" />
         </div>
         <div className="hero-content">
           <p className="eyebrow">AutoHire Intelligence Platform</p>
@@ -69,6 +72,7 @@ function Home() {
         <div className="how-grid">
           {howItWorks.map((item) => (
             <article className="interactive-card" key={item.title}>
+              <div className="card-tilt-layer" />
               <h3>{item.title}</h3>
               <p>{item.description}</p>
             </article>
@@ -80,6 +84,7 @@ function Home() {
         <h2>Talent Network Visualization</h2>
         <p className="section-note">Live signal map across skills, roles, and match confidence.</p>
         <div className="network-panel">
+          <div className="holo-cube" />
           <div className="skill-cloud">
             {skillNodes.map((node, index) => (
               <span className="skill-node" style={{ '--i': index }} key={node}>
