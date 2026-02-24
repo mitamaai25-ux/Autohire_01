@@ -116,6 +116,16 @@ function Landing() {
 
   return (
     <main className="landing-page">
+      <header className="top-menu">
+        <strong className="brand">AutoHire</strong>
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/onboarding">Onboarding</Link>
+          <Link to="/resume-scoring">Resume Scoring</Link>
+          <Link to="/login">Login</Link>
+        </nav>
+      </header>
+
       <section className="hero-3d">
         <div className="orbs" aria-hidden="true">
           <span className="orb orb-a" />
@@ -138,6 +148,9 @@ function Landing() {
             </Link>
             <Link className="btn btn-secondary" to="/login">
               Sign In
+            </Link>
+            <Link className="btn btn-secondary" to="/resume-scoring">
+              Resume Scoring
             </Link>
           </div>
         </div>

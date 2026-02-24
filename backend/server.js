@@ -120,6 +120,68 @@ app.get('/api/dashboard', authMiddleware, (req, res) => {
   });
 });
 
+
+
+app.post('/api/resume-score', (req, res) => {
+  try {
+    const {
+      skills = [],
+      experienceYears = 0,
+      educationLevel = 'other',
+      projectsCount = 0,
+      keywordsMatched = 0,
+    } = req.body;
+
+    const normalizedSkills = Array.isArray(skills)
+      ? skills.filter((skill) => typeof skill === 'string' && skill.trim())
+      : [];
+
+    const safeExperience = Number.isFinite(Number(experienceYears)) ? Number(experienceYears) : 0;
+    const safeProjects = Number.isFinite(Number(projectsCount)) ? Number(projectsCount) : 0;
+    const safeKeywords = Number.isFinite(Number(keywordsMatched)) ? Number(keywordsMatched) : 0;
+
+    const skillScore = Math.min(normalizedSkills.length * 6, 30);
+    const experienceScore = Math.min(Math.max(safeExperience, 0) * 4, 25);
+    const projectScore = Math.min(Math.max(safeProjects, 0) * 3, 20);
+    const keywordScore = Math.min(Math.max(safeKeywords, 0) * 5, 15);
+
+    const educationMap = {
+      phd: 10,
+      masters: 8,
+      bachelors: 6,
+      diploma: 4,
+      other: 2,
+    };
+
+    const educationScore = educationMap[(educationLevel || 'other').toLowerCase()] || 2;
+
+    const totalScore = Math.min(
+      Math.round(skillScore + experienceScore + projectScore + keywordScore + educationScore),
+      100
+    );
+
+    const recommendations = [];
+    if (normalizedSkills.length < 5) recommendations.push('Add more relevant technical and domain skills.');
+    if (safeExperience < 2) recommendations.push('Highlight internships, freelance work, or measurable impact projects.');
+    if (safeProjects < 3) recommendations.push('Include additional portfolio projects with outcomes.');
+    if (safeKeywords < 2) recommendations.push('Align resume keywords with the target job description.');
+
+    return res.json({
+      message: 'Resume scored successfully.',
+      score: totalScore,
+      breakdown: {
+        skills: skillScore,
+        experience: experienceScore,
+        projects: projectScore,
+        keywords: keywordScore,
+        education: educationScore,
+      },
+      recommendations,
+    });
+  } catch {
+    return res.status(500).json({ message: 'Server error while scoring resume.' });
+  }
+});
 app.listen(PORT, () => {
   console.log(`AutoHire backend listening on port ${PORT}`);
 });

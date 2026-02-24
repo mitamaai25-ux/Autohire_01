@@ -14,6 +14,30 @@ body {
 }
 
 
+
+.top-menu {
+  max-width: 1100px;
+  margin: 0 auto 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.top-menu nav {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.top-menu a {
+  color: #c9d8ff;
+  text-decoration: none;
+  border: 1px solid rgba(120, 151, 245, 0.35);
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.9rem;
+}
+
 .landing-page {
   min-height: 100vh;
   padding: 2rem 1.5rem 3rem;
@@ -185,6 +209,9 @@ body {
   box-shadow: 0 14px 32px rgba(56, 110, 232, 0.25);
 }
 
+
+
+
 .match-sim-section {
   max-width: 1100px;
   margin: 1.8rem auto 0;
@@ -292,6 +319,7 @@ body {
   padding-left: 1rem;
   color: #afc0ea;
 }
+
 
 .decision-section {
   max-width: 1100px;
@@ -658,6 +686,27 @@ h1 {
   color: #b5c4ea;
 }
 
+
+.resume-card {
+  max-width: 700px;
+}
+
+select {
+  padding: 0.7rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(144, 174, 243, 0.45);
+  background: rgba(12, 19, 44, 0.65);
+  color: #fff;
+}
+
+.score-result {
+  margin-top: 1rem;
+  border: 1px solid rgba(122, 157, 255, 0.3);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: rgba(10, 22, 53, 0.7);
+}
+
 /* Existing auth/dashboard pages support */
 .page {
   min-height: 100vh;
@@ -753,6 +802,12 @@ input {
 
   .persona-tabs {
     justify-content: flex-start;
+  }
+
+  .top-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
   }
 
   .workspace-page {
