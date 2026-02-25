@@ -61,3 +61,19 @@ export async function scoreResume(payload) {
 
   return data;
 }
+
+
+export async function matchFreelancers(payload) {
+  const response = await fetch(`${API_BASE_URL}/job-matching`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Job matching failed.');
+  }
+
+  return data;
+}

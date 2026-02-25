@@ -718,6 +718,64 @@ select {
   background: rgba(10, 22, 53, 0.7);
 }
 
+
+
+.recruiter-card {
+  max-width: 980px;
+}
+
+textarea {
+  padding: 0.7rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(144, 174, 243, 0.45);
+  background: rgba(12, 19, 44, 0.65);
+  color: #fff;
+  resize: vertical;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.check-row {
+  display: flex;
+  gap: 0.55rem;
+  align-items: center;
+  font-weight: 500;
+}
+
+.check-row input {
+  width: auto;
+}
+
+.match-result {
+  margin-top: 1rem;
+}
+
+.muted {
+  color: #b7c8ef;
+}
+
+.rankings-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.7rem;
+}
+
+.ranking-card {
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 11px;
+  padding: 0.7rem;
+  background: rgba(109, 153, 255, 0.12);
+}
+
+.ranking-card h4 {
+  margin: 0 0 0.25rem;
+}
+
 /* Existing auth/dashboard pages support */
 .page {
   min-height: 100vh;
@@ -827,6 +885,10 @@ input {
 
   .tips-grid,
   .recent-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-grid {
     grid-template-columns: 1fr;
   }
 }

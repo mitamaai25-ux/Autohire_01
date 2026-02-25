@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ResumeScoring from './pages/ResumeScoring';
+import RecruiterDashboard from './pages/RecruiterDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/onboarding" element={<Home />} />
       <Route path="/resume-scoring" element={<ResumeScoring />} />
+      <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route

@@ -122,6 +122,7 @@ function Landing() {
           <Link to="/">Home</Link>
           <Link to="/onboarding">Onboarding</Link>
           <Link to="/resume-scoring">Resume Scoring</Link>
+          <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
           <Link to="/login">Login</Link>
         </nav>
       </header>
@@ -151,6 +152,9 @@ function Landing() {
             </Link>
             <Link className="btn btn-secondary" to="/resume-scoring">
               Resume Scoring
+            </Link>
+            <Link className="btn btn-secondary" to="/recruiter-dashboard">
+              Recruiter Dashboard
             </Link>
           </div>
         </div>

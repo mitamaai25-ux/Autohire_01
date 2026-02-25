@@ -182,6 +182,199 @@ app.post('/api/resume-score', (req, res) => {
     return res.status(500).json({ message: 'Server error while scoring resume.' });
   }
 });
+
+
+const tokenize = (text = '') =>
+  String(text)
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((token) => token.length > 2);
+
+const toFrequencyMap = (tokens) => {
+  const map = new Map();
+  tokens.forEach((token) => {
+    map.set(token, (map.get(token) || 0) + 1);
+  });
+  return map;
+};
+
+const cosineSimilarity = (aMap, bMap) => {
+  const vocab = new Set([...aMap.keys(), ...bMap.keys()]);
+  let dot = 0;
+  let magA = 0;
+  let magB = 0;
+
+  vocab.forEach((word) => {
+    const a = aMap.get(word) || 0;
+    const b = bMap.get(word) || 0;
+    dot += a * b;
+    magA += a * a;
+    magB += b * b;
+  });
+
+  const denom = Math.sqrt(magA) * Math.sqrt(magB);
+  if (!denom) return 0;
+  return dot / denom;
+};
+
+const inferExperienceWeight = (years) => {
+  if (years >= 8) return 'High';
+  if (years >= 4) return 'Medium';
+  return 'Low';
+};
+
+const inferConfidence = (score) => {
+  if (score >= 85) return 'Strong Fit';
+  if (score >= 70) return 'Good Fit';
+  if (score >= 55) return 'Moderate Fit';
+  return 'Needs Review';
+};
+
+const demoFreelancers = [
+  {
+    id: 'f1',
+    name: 'Nina George',
+    skills: ['React', 'Node.js', 'TypeScript', 'REST APIs'],
+    experienceYears: 7,
+    clientRating: 4.8,
+    projectHistory: 42,
+    profileText:
+      'Senior full-stack engineer focused on React architecture, Node APIs, and scalable SaaS delivery.',
+  },
+  {
+    id: 'f2',
+    name: 'Arjun Menon',
+    skills: ['Python', 'NLP', 'Data modeling', 'FastAPI'],
+    experienceYears: 5,
+    clientRating: 4.7,
+    projectHistory: 31,
+    profileText:
+      'AI engineer building semantic ranking systems, recommendation pipelines, and data-heavy backend services.',
+  },
+  {
+    id: 'f3',
+    name: 'Leah Torres',
+    skills: ['UI/UX', 'Figma', 'Design Systems', 'Frontend'],
+    experienceYears: 6,
+    clientRating: 4.9,
+    projectHistory: 38,
+    profileText:
+      'Product designer collaborating with engineering teams to ship intuitive interfaces and reusable design systems.',
+  },
+  {
+    id: 'f4',
+    name: 'Victor Shah',
+    skills: ['Node.js', 'PostgreSQL', 'API design', 'System design'],
+    experienceYears: 9,
+    clientRating: 4.6,
+    projectHistory: 55,
+    profileText:
+      'Backend specialist with deep experience in APIs, database optimization, and distributed service reliability.',
+  },
+];
+
+app.post('/api/job-matching', (req, res) => {
+  try {
+    const {
+      jobDescription = '',
+      requiredSkills = [],
+      freelancers = demoFreelancers,
+      filters = {},
+      realtime = false,
+    } = req.body || {};
+
+    const safeFreelancers = Array.isArray(freelancers) && freelancers.length ? freelancers : demoFreelancers;
+
+    const reqSkills = Array.isArray(requiredSkills)
+      ? requiredSkills.map((skill) => String(skill).trim().toLowerCase()).filter(Boolean)
+      : [];
+
+    const jobTokens = tokenize(`${jobDescription} ${reqSkills.join(' ')}`);
+    const jobVec = toFrequencyMap(jobTokens);
+
+    const minRating = Number(filters.minRating || 0);
+    const minExperience = Number(filters.minExperience || 0);
+    const minProjects = Number(filters.minProjects || 0);
+
+    const ranked = safeFreelancers
+      .map((freelancer, index) => {
+        const fSkills = Array.isArray(freelancer.skills)
+          ? freelancer.skills.map((skill) => String(skill).trim().toLowerCase()).filter(Boolean)
+          : [];
+
+        const overlap = reqSkills.length
+          ? reqSkills.filter((skill) => fSkills.includes(skill)).length / reqSkills.length
+          : 0;
+
+        const profileTokens = tokenize(
+          `${freelancer.profileText || ''} ${fSkills.join(' ')} ${freelancer.experienceYears || 0}`
+        );
+        const profileVec = toFrequencyMap(profileTokens);
+        const semanticScore = Math.round(cosineSimilarity(jobVec, profileVec) * 100);
+
+        const skillMatch = Math.round(overlap * 100);
+        const expYears = Number(freelancer.experienceYears || 0);
+        const expNormalized = Math.min(expYears / 10, 1);
+        const ratingNormalized = Math.min(Number(freelancer.clientRating || 0) / 5, 1);
+        const projectsNormalized = Math.min(Number(freelancer.projectHistory || 0) / 50, 1);
+
+        const liveBoost = realtime ? (Math.sin(Date.now() / 1800 + index) + 1) * 1.3 : 0;
+
+        const total = Math.min(
+          100,
+          Math.round(
+            semanticScore * 0.45 +
+              skillMatch * 0.2 +
+              expNormalized * 100 * 0.15 +
+              ratingNormalized * 100 * 0.1 +
+              projectsNormalized * 100 * 0.1 +
+              liveBoost
+          )
+        );
+
+        return {
+          id: freelancer.id,
+          name: freelancer.name,
+          role: freelancer.role || 'Freelancer',
+          matchScore: total,
+          semanticMatchScore: semanticScore,
+          skillMatch,
+          experienceWeight: inferExperienceWeight(expYears),
+          confidenceLevel: inferConfidence(total),
+          clientRating: Number(freelancer.clientRating || 0),
+          projectHistory: Number(freelancer.projectHistory || 0),
+          skills: fSkills,
+        };
+      })
+      .filter(
+        (item) =>
+          item.clientRating >= minRating &&
+          (item.experienceWeight === 'High' || minExperience < 8
+            ? true
+            : item.experienceWeight === 'Medium' || minExperience < 4) &&
+          item.projectHistory >= minProjects
+      )
+      .sort((a, b) => b.matchScore - a.matchScore);
+
+    const suggestions = ranked.slice(0, 3).map((item) => `${item.name} (${item.matchScore}%)`);
+
+    return res.json({
+      message: 'Job matching completed.',
+      sampleOutput: {
+        matchScore: '87%',
+        skillMatch: '92%',
+        experienceWeight: 'High',
+        confidenceLevel: 'Strong Fit',
+      },
+      suggestions,
+      rankings: ranked,
+      updatedAt: new Date().toISOString(),
+    });
+  } catch {
+    return res.status(500).json({ message: 'Server error during job matching.' });
+  }
+});
 app.listen(PORT, () => {
   console.log(`AutoHire backend listening on port ${PORT}`);
 });
