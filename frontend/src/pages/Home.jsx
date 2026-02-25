@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 
 const onboardingSteps = [
@@ -50,6 +50,7 @@ const recentProjects = [
 ];
 
 function Home() {
+  const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
@@ -64,6 +65,10 @@ function Home() {
   };
 
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
+  const handleSkipForNow = () => {
+    setCompleted(true);
+  };
+
   const handleContinue = () => {
     if (!canContinue) return;
     if (!isLast) {
@@ -85,6 +90,9 @@ function Home() {
             </Link>
             <button className="side-item active" type="button">
               Projects
+            </button>
+            <button className="side-item" onClick={() => navigate('/jobs')} type="button">
+              Jobs
             </button>
             <button className="side-item" type="button">
               AI Studio
@@ -158,7 +166,7 @@ function Home() {
             <Link className="ghost-btn" to="/">
               ← Home
             </Link>
-            <button className="ghost-btn" type="button">
+            <button className="ghost-btn" onClick={handleSkipForNow} type="button">
               Skip for now
             </button>
           </div>
