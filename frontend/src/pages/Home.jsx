@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 
 const onboardingSteps = [
@@ -150,9 +151,14 @@ function Home() {
       <section className="onboarding-shell">
         <header className="onboarding-header">
           <strong className="brand">AutoHire</strong>
-          <button className="ghost-btn" type="button">
-            Skip for now
-          </button>
+          <div className="onboarding-header-actions">
+            <Link className="ghost-btn" to="/">
+              ← Home
+            </Link>
+            <button className="ghost-btn" type="button">
+              Skip for now
+            </button>
+          </div>
         </header>
 
         <div className="progress-rails" aria-hidden="true">
