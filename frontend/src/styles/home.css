@@ -593,7 +593,9 @@ h1 {
   gap: 0.45rem;
 }
 
-.side-item {
+.side-item,
+.side-link {
+  display: block;
   background: transparent;
   border: 1px solid rgba(107, 140, 219, 0.24);
   color: #d3e0ff;
@@ -601,9 +603,11 @@ h1 {
   padding: 0.55rem 0.7rem;
   border-radius: 10px;
   cursor: pointer;
+  text-decoration: none;
 }
 
-.side-item.active {
+.side-item.active,
+.side-link:hover {
   background: rgba(95, 88, 210, 0.28);
   border-color: rgba(133, 144, 255, 0.44);
 }

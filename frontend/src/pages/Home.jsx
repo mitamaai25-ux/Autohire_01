@@ -80,6 +80,9 @@ function Home() {
         <aside className="workspace-sidebar">
           <strong className="brand">AutoHire</strong>
           <nav>
+            <Link className="side-link" to="/">
+              Home
+            </Link>
             <button className="side-item active" type="button">
               Projects
             </button>
