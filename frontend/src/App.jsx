@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import ResumeScoring from './pages/ResumeScoring';
 import RecruiterDashboard from './pages/RecruiterDashboard';
+import FreelancerDashboard from './pages/FreelancerDashboard';
 import Jobs from './pages/Jobs';
 import JobsDashboard from './pages/JobsDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -17,6 +18,7 @@ function App() {
       <Route path="/onboarding" element={<Home />} />
       <Route path="/resume-scoring" element={<ResumeScoring />} />
       <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
+      <Route path="/freelancer-dashboard" element={<FreelancerDashboard />} />
       <Route path="/jobs" element={<Jobs />} />
       <Route path="/jobs/dashboard/:mode" element={<JobsDashboard />} />
       <Route path="/login" element={<Login />} />
