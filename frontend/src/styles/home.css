@@ -1128,21 +1128,22 @@ input {
 }
 
 /* Light theme overrides */
+
 :root {
-  color: #1f2937;
-  background: #f6f9ff;
+  color: #f7eef6;
+  background: #6f3d69;
 }
 
 body {
-  color: #1f2937;
-  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+  color: #f7eef6;
+  background: linear-gradient(160deg, #6f3d69 0%, #8e4d82 35%, #ab6699 70%, #c986bb 100%);
 }
 
 .landing-page,
 .onboarding-page,
 .workspace-page,
 .page {
-  color: #1f2937;
+  color: #f9f0f7;
 }
 
 .top-menu a,
@@ -1160,7 +1161,7 @@ body {
 .simulation-readout ul,
 .decision-card p,
 .xai-card p {
-  color: #4b5563;
+  color: #f4dff0;
 }
 
 .hero-card,
@@ -1183,30 +1184,35 @@ body {
 .job-item,
 .score-result,
 .stats-grid article {
-  background: #ffffff;
-  border-color: rgba(148, 163, 184, 0.45);
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+  background: rgba(111, 61, 105, 0.78);
+  border-color: rgba(233, 184, 220, 0.45);
+  box-shadow: 0 8px 24px rgba(66, 31, 61, 0.35);
 }
 
 .workspace-page {
-  background: #eef4ff;
-  border-color: rgba(148, 163, 184, 0.45);
+  background: linear-gradient(160deg, #83487a 0%, #af6ba0 100%);
+  border-color: rgba(233, 184, 220, 0.4);
 }
 
 .workspace-sidebar {
-  background: #f8fbff;
-  border-right-color: rgba(148, 163, 184, 0.45);
+  background: rgba(104, 53, 98, 0.9);
+  border-right-color: rgba(233, 184, 220, 0.35);
 }
 
 input,
 select,
 textarea {
-  background: #ffffff;
-  color: #1f2937;
-  border-color: rgba(148, 163, 184, 0.6);
+  background: rgba(244, 215, 237, 0.12);
+  color: #fff4fb;
+  border-color: rgba(233, 184, 220, 0.55);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #c17ab1, #d89ac8);
+  color: #4a2345;
 }
 
 .btn-secondary {
-  background: #dbeafe;
-  color: #1e3a8a;
+  background: #e8bddc;
+  color: #5b2f55;
 }
