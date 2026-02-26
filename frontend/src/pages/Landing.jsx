@@ -116,7 +116,7 @@ function Landing() {
 
   return (
     <main className="landing-page">
-      <header className="top-menu">
+      <header className="top-menu fade-in-down">
         <strong className="brand">AutoHire</strong>
         <nav>
           <Link to="/">Home</Link>
@@ -134,7 +134,7 @@ function Landing() {
           <span className="orb orb-b" />
           <span className="orb orb-c" />
         </div>
-        <div className="hero-card">
+        <div className="hero-card float-glow">
           <p className="badge">AutoHire • AI Hiring + Freelancing Intelligence</p>
           <h1>Futuristic AI-Powered Hiring & Freelancing Platform</h1>
           <p>
@@ -164,7 +164,7 @@ function Landing() {
         </div>
       </section>
 
-      <section className="persona-section">
+      <section className="persona-section reveal-up delay-1">
         <div className="xai-header">
           <p className="badge">Persona Selection Flow</p>
           <h2>Enter as Employer, Freelancer, Recruiter, or Enterprise HR</h2>
@@ -195,7 +195,7 @@ function Landing() {
         </article>
       </section>
 
-      <section className="feature-grid">
+      <section className="feature-grid reveal-up delay-2">
         {features.map((item) => (
           <article className="feature-card" key={item.title}>
             <h3>{item.title}</h3>
@@ -204,7 +204,7 @@ function Landing() {
         ))}
       </section>
 
-      <section className="match-sim-section">
+      <section className="match-sim-section reveal-up delay-3">
         <div className="xai-header">
           <p className="badge">Real-Time AI Matching Simulation</p>
           <h2>Dynamic Candidate Graph While AI Evaluates Job Requirements</h2>
@@ -257,7 +257,7 @@ function Landing() {
         </div>
       </section>
 
-      <section className="decision-section">
+      <section className="decision-section reveal-up delay-4">
         <div className="xai-header">
           <p className="badge">AI Decision Assistant</p>
           <h2>Actionable Hiring Intelligence in Clean Analytics Cards</h2>
@@ -277,7 +277,7 @@ function Landing() {
         </div>
       </section>
 
-      <section className="xai-section">
+      <section className="xai-section reveal-up delay-5">
         <div className="xai-header">
           <p className="badge">Explainable AI</p>
           <h2>How AutoHire Evaluates Candidates</h2>

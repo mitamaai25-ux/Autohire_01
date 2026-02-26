@@ -1012,3 +1012,117 @@ input {
 .jobs-role-section {
   margin-top: 1rem;
 }
+
+.jobs-generator {
+  margin-top: 1rem;
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 11px;
+  padding: 0.75rem;
+  background: rgba(109, 153, 255, 0.08);
+}
+
+.jobs-generator h3 {
+  margin-top: 0;
+}
+
+.jobs-generator-form {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.jobs-generator-output {
+  margin-top: 0.85rem;
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 10px;
+  padding: 0.7rem;
+  background: rgba(109, 153, 255, 0.12);
+}
+
+.jobs-generator-output h4 {
+  margin: 0 0 0.5rem;
+}
+
+.jobs-generator-output p {
+  margin: 0.3rem 0;
+}
+
+.jobs-generator-output ul {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.fade-in-down {
+  animation: fadeInDown 0.8s ease both;
+}
+
+.float-glow {
+  animation: heroFloat 5s ease-in-out infinite;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: revealUp 0.8s ease forwards;
+}
+
+.delay-1 {
+  animation-delay: 0.08s;
+}
+
+.delay-2 {
+  animation-delay: 0.16s;
+}
+
+.delay-3 {
+  animation-delay: 0.24s;
+}
+
+.delay-4 {
+  animation-delay: 0.32s;
+}
+
+.delay-5 {
+  animation-delay: 0.4s;
+}
+
+.top-menu a {
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.top-menu a:hover {
+  transform: translateY(-2px);
+  border-color: rgba(138, 190, 255, 0.8);
+  box-shadow: 0 0 14px rgba(117, 177, 255, 0.32);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroFloat {
+  0%,
+  100% {
+    transform: rotateX(6deg) translateY(0);
+  }
+  50% {
+    transform: rotateX(6deg) translateY(-6px);
+  }
+}
