@@ -1126,3 +1126,87 @@ input {
     transform: rotateX(6deg) translateY(-6px);
   }
 }
+
+/* Light theme overrides */
+:root {
+  color: #1f2937;
+  background: #f6f9ff;
+}
+
+body {
+  color: #1f2937;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+}
+
+.landing-page,
+.onboarding-page,
+.workspace-page,
+.page {
+  color: #1f2937;
+}
+
+.top-menu a,
+.ghost-btn,
+.side-item,
+.side-link,
+.persona-preview-sub,
+.xai-header p,
+.hero-card p,
+.subtitle,
+.muted,
+.option-card span,
+.project-info p,
+.pro-box p,
+.simulation-readout ul,
+.decision-card p,
+.xai-card p {
+  color: #4b5563;
+}
+
+.hero-card,
+.persona-section,
+.persona-preview-card,
+.match-sim-section,
+.sim-card,
+.decision-section,
+.decision-card,
+.xai-section,
+.xai-card,
+.feature-card,
+.card,
+.action-card,
+.tip-card,
+.project-card,
+.pro-box,
+.jobs-generator,
+.jobs-generator-output,
+.job-item,
+.score-result,
+.stats-grid article {
+  background: #ffffff;
+  border-color: rgba(148, 163, 184, 0.45);
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.06);
+}
+
+.workspace-page {
+  background: #eef4ff;
+  border-color: rgba(148, 163, 184, 0.45);
+}
+
+.workspace-sidebar {
+  background: #f8fbff;
+  border-right-color: rgba(148, 163, 184, 0.45);
+}
+
+input,
+select,
+textarea {
+  background: #ffffff;
+  color: #1f2937;
+  border-color: rgba(148, 163, 184, 0.6);
+}
+
+.btn-secondary {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
