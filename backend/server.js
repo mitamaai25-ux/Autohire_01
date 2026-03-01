@@ -145,6 +145,34 @@ app.get('/api/freelancer-dashboard', (_req, res) => {
   res.json(freelancerDashboardData);
 });
 
+// Enterprise dashboard metrics (dummy data for demo)
+const enterpriseDashboardData = {
+  openRequisitions: 24,
+  filledThisQuarter: 18,
+  avgTimeToHireDays: 28,
+  offerAcceptanceRate: 72,
+  pipeline: {
+    open: 24,
+    shortlisted: 14,
+    interview: 8,
+    offered: 5,
+    filled: 3,
+  },
+  requisitionHealth: {
+    filled: 18,
+    inProgress: 12,
+    onHold: 4,
+    open: 10,
+  },
+  budgetUtilizationPercent: 78,
+  qualityOfHireScore: 4.2,
+  diversityIndex: 0.68,
+};
+
+app.get('/api/enterprise-dashboard', (_req, res) => {
+  res.json(enterpriseDashboardData);
+});
+
 app.post('/api/resume-score', (req, res) => {
   try {
     const {

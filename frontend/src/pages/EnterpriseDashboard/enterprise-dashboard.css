@@ -1,0 +1,240 @@
+/* Enterprise Dashboard — operational layout. Same design language (colors, typography, spacing). */
+
+/* Row 1: Executive snapshot — 4 equal wide KPI cards */
+.enterprise-dashboard-page .ed-row-exec {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ed-kpi-card {
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 14px;
+  padding: 1.25rem 1rem;
+  background: linear-gradient(150deg, rgba(12, 21, 49, 0.9), rgba(10, 16, 35, 0.9));
+  text-align: center;
+  min-height: 88px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ed-kpi-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #a9bee9;
+  margin-bottom: 0.35rem;
+}
+
+.ed-kpi-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #89dbff;
+}
+
+/* Row 2: Hiring efficiency — velocity (8 cols) | funnel (4 cols) */
+.enterprise-dashboard-page .ed-row-1 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Row 3: Workforce demand — department bar | status stacked bar */
+.enterprise-dashboard-page .ed-row-2 {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Row 4: Governance metrics — full width */
+.enterprise-dashboard-page .ed-row-3 {
+  margin-bottom: 1rem;
+}
+
+/* Row 5: Workforce insights — full width */
+.enterprise-dashboard-page .ed-row-4 {
+  margin-bottom: 0;
+}
+
+.ed-card {
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 14px;
+  padding: 1rem;
+  background: linear-gradient(150deg, rgba(12, 21, 49, 0.85), rgba(10, 16, 35, 0.85));
+}
+
+.ed-chart-card {
+  min-height: 200px;
+}
+
+.ed-card-title {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+  color: #dfe8ff;
+}
+
+.ed-card-desc {
+  color: #a9bee9;
+  font-size: 0.82rem;
+  margin: 0 0 0.75rem;
+}
+
+.ed-chart-wrap {
+  width: 100%;
+}
+
+.ed-line-wrap,
+.ed-funnel-wrap {
+  margin-top: 0.5rem;
+}
+
+.ed-bar-wrap,
+.ed-stack-wrap {
+  margin-top: 0.25rem;
+}
+
+/* Stacked bar legend below chart */
+.ed-stack-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.25rem;
+  justify-content: center;
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: #b5c4ea;
+}
+
+.ed-stack-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ed-stack-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Governance metrics — HR analytics block */
+.ed-governance-card {
+  padding: 1.25rem;
+}
+
+.ed-gov-blocks {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.ed-gov-block {
+  border: 1px solid rgba(137, 172, 255, 0.2);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: rgba(109, 153, 255, 0.08);
+  text-align: center;
+}
+
+.ed-gov-label {
+  display: block;
+  font-size: 0.8rem;
+  color: #a9bee9;
+  margin-bottom: 0.25rem;
+}
+
+.ed-gov-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #89dbff;
+}
+
+.ed-decline-section {
+  border-top: 1px solid rgba(127, 160, 255, 0.2);
+  padding-top: 1rem;
+}
+
+.ed-decline-title {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: #dfe8ff;
+}
+
+.ed-decline-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ed-decline-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(60px, 120px) auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+}
+
+.ed-decline-label {
+  color: #d7e3ff;
+}
+
+.ed-decline-bar-bg {
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(127, 160, 255, 0.2);
+  overflow: hidden;
+}
+
+.ed-decline-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 143, 154, 0.85), rgba(255, 215, 122, 0.75));
+  transition: width 0.4s ease;
+}
+
+.ed-decline-count {
+  color: #89dbff;
+  font-weight: 600;
+}
+
+/* Actionable workforce insight panel */
+.ed-insight-panel {
+  border-left: 4px solid #ffd27a;
+}
+
+.ed-insight-panel-message {
+  margin: 0;
+  color: #b6c8f3;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 768px) {
+  .enterprise-dashboard-page .ed-row-exec {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .enterprise-dashboard-page .ed-row-1 {
+    grid-template-columns: 1fr;
+  }
+
+  .enterprise-dashboard-page .ed-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .ed-gov-blocks {
+    grid-template-columns: 1fr;
+  }
+
+  .ed-decline-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .ed-decline-bar-bg {
+    grid-column: 1 / -1;
+  }
+}

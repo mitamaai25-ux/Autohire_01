@@ -55,6 +55,15 @@ export async function getFreelancerDashboard() {
   return data;
 }
 
+export async function getEnterpriseDashboard() {
+  const response = await fetch(`${API_BASE_URL}/enterprise-dashboard`);
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || 'Could not load enterprise dashboard.');
+  }
+  return data;
+}
+
 export async function scoreResume(payload) {
   const response = await fetch(`${API_BASE_URL}/resume-score`, {
     method: 'POST',
