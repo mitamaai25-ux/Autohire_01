@@ -64,10 +64,91 @@ const mockMetrics = {
   },
 };
 
+const skillLibrary = {
+  engineer: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'REST APIs'],
+  developer: ['React', 'Node.js', 'Testing', 'Git', 'Problem Solving'],
+  designer: ['Figma', 'Wireframing', 'Design Systems', 'User Research', 'Prototyping'],
+  analyst: ['SQL', 'Excel', 'Dashboarding', 'Data Modeling', 'Stakeholder Reporting'],
+  manager: ['Roadmapping', 'Communication', 'Sprint Planning', 'Prioritization', 'Risk Management'],
+  tutor: ['Communication', 'Curriculum Planning', 'Assessment', 'Presentation', 'Mentoring'],
+};
+
+const vagueTerms = ['good', 'best', 'various', 'etc', 'some', 'dynamic', 'hardworking', 'nice'];
+
+const getRoleSkills = (title = '') => {
+  const lower = title.toLowerCase();
+  const firstKey = Object.keys(skillLibrary).find((key) => lower.includes(key));
+  return firstKey ? skillLibrary[firstKey] : ['Communication', 'Ownership', 'Collaboration', 'Reporting'];
+};
+
+const inferExperienceRecommendation = (title = '', selectedMode = '') => {
+  const lower = title.toLowerCase();
+  if (lower.includes('senior') || lower.includes('lead') || lower.includes('manager')) return '6+ years (Senior)';
+  if (selectedMode === 'part-time' || lower.includes('associate') || lower.includes('junior')) {
+    return '1-3 years (Junior/Mid)';
+  }
+  return '3-5 years (Mid-level)';
+};
+
+const inferBudgetRange = (selectedMode = '') => {
+  if (selectedMode === 'part-time') return '₹25,000 - ₹60,000 / month';
+  if (selectedMode === 'full-time') return '₹8L - ₹18L / year';
+  if (selectedMode === 'remote') return '₹9L - ₹20L / year';
+  if (selectedMode === 'hybrid') return '₹7L - ₹16L / year';
+  return '₹5L - ₹12L / year';
+};
+
+const inferMarketBenchmark = (title = '', selectedMode = '') => {
+  const lower = title.toLowerCase();
+  if (lower.includes('engineer') || lower.includes('developer')) {
+    return selectedMode === 'part-time' ? 'Market median: ₹45,000/month' : 'Market median: ₹12.5L/year';
+  }
+  if (lower.includes('designer')) return 'Market median: ₹9.2L/year';
+  if (lower.includes('analyst')) return 'Market median: ₹8.4L/year';
+  return 'Market median: ₹7.8L/year';
+};
+
+const detectClarityGaps = (input = '') => {
+  const text = input.toLowerCase();
+  const improvements = [];
+
+  if (text.length < 80) improvements.push('Add scope details (team, product, and key responsibilities).');
+  if (!/\d+\s*(year|years)/.test(text)) improvements.push('Specify required years of experience for screening clarity.');
+  if (!/(remote|hybrid|on[- ]site|online)/.test(text)) improvements.push('Mention work mode explicitly (remote, hybrid, onsite, or online).');
+  if (!/(budget|salary|ctc|compensation|₹|rs|usd)/.test(text)) improvements.push('Add budget or compensation band to improve applicant quality.');
+  if (!/(responsible|build|design|manage|analy[sz]e|deliver)/.test(text)) {
+    improvements.push('Use action-oriented responsibilities (build, manage, design, deliver).');
+  }
+
+  const foundVague = vagueTerms.filter((term) => text.includes(term));
+  if (foundVague.length) {
+    improvements.push(`Replace vague wording (${foundVague.join(', ')}) with measurable expectations.`);
+  }
+
+  return improvements;
+};
+
+const generateStructuredDescription = ({ title, area, mode, experience }) => {
+  const safeTitle = title || 'Role';
+  const safeArea = area || 'the target region';
+  const safeMode = mode || 'work setup';
+  return [
+    `We are hiring a ${safeTitle} to support our hiring roadmap across ${safeArea}.`,
+    `This is a ${safeMode} role focused on delivering measurable outcomes and stakeholder collaboration.`,
+    `The candidate should bring ${experience} and demonstrate ownership across delivery milestones.`,
+  ].join(' ');
+};
+
 function JobsDashboard() {
   const { mode = 'part-time' } = useParams();
   const [windowKey, setWindowKey] = useState('weekly');
   const [areaFilter, setAreaFilter] = useState('');
+  const [generatorInput, setGeneratorInput] = useState({
+    roleTitle: '',
+    roleContext: '',
+    area: '',
+  });
+  const [generated, setGenerated] = useState(null);
 
   const metrics = useMemo(() => mockMetrics[mode] || mockMetrics['part-time'], [mode]);
 
@@ -83,6 +164,38 @@ function JobsDashboard() {
       ),
     [metrics.roles, areaFilter]
   );
+
+  const handleGenerate = (event) => {
+    event.preventDefault();
+
+    const title = generatorInput.roleTitle.trim() || `${label} Specialist`;
+    const roleSkills = getRoleSkills(title);
+    const requiredSkills = roleSkills.slice(0, 4);
+    const preferredSkills = roleSkills.slice(2);
+    const experienceRecommendation = inferExperienceRecommendation(title, mode);
+    const budgetRangeSuggestion = inferBudgetRange(mode);
+    const marketSalaryBenchmark = inferMarketBenchmark(title, mode);
+
+    const structuredJobDescription = generateStructuredDescription({
+      title,
+      area: generatorInput.area.trim(),
+      mode: label,
+      experience: experienceRecommendation,
+    });
+
+    const clarityImprovements = detectClarityGaps(generatorInput.roleContext);
+
+    setGenerated({
+      structuredJobDescription,
+      requiredSkills,
+      preferredSkills,
+      budgetRangeSuggestion,
+      experienceRecommendation,
+      marketSalaryBenchmark,
+      vagueDetected: clarityImprovements.length > 0,
+      clarityImprovements,
+    });
+  };
 
   return (
     <main className="page jobs-page">
@@ -112,6 +225,94 @@ function JobsDashboard() {
             <p>{metrics.topArea}</p>
           </article>
         </div>
+
+        <section className="jobs-generator">
+          <h3>AI Job Description Generator (Recruiter)</h3>
+          <form className="jobs-generator-form" onSubmit={handleGenerate}>
+            <label htmlFor="roleTitle">Role Title</label>
+            <input
+              id="roleTitle"
+              value={generatorInput.roleTitle}
+              onChange={(event) =>
+                setGeneratorInput((prev) => ({
+                  ...prev,
+                  roleTitle: event.target.value,
+                }))
+              }
+              placeholder="e.g. Senior Backend Engineer"
+            />
+
+            <label htmlFor="roleContext">Role Context / Draft Description</label>
+            <textarea
+              id="roleContext"
+              rows={4}
+              value={generatorInput.roleContext}
+              onChange={(event) =>
+                setGeneratorInput((prev) => ({
+                  ...prev,
+                  roleContext: event.target.value,
+                }))
+              }
+              placeholder="Add draft responsibilities, expectations, and goals..."
+            />
+
+            <label htmlFor="roleArea">Working Area</label>
+            <input
+              id="roleArea"
+              value={generatorInput.area}
+              onChange={(event) =>
+                setGeneratorInput((prev) => ({
+                  ...prev,
+                  area: event.target.value,
+                }))
+              }
+              placeholder="e.g. Bangalore"
+            />
+
+            <button className="btn btn-primary" type="submit">
+              Generate with AI
+            </button>
+          </form>
+
+          {generated && (
+            <article className="jobs-generator-output">
+              <h4>Generated Output</h4>
+              <p>
+                <strong>Structured Job Description:</strong> {generated.structuredJobDescription}
+              </p>
+              <p>
+                <strong>Required Skills:</strong> {generated.requiredSkills.join(', ')}
+              </p>
+              <p>
+                <strong>Preferred Skills:</strong> {generated.preferredSkills.join(', ')}
+              </p>
+              <p>
+                <strong>Budget Range Suggestion:</strong> {generated.budgetRangeSuggestion}
+              </p>
+              <p>
+                <strong>Experience Level Recommendation:</strong> {generated.experienceRecommendation}
+              </p>
+              <p>
+                <strong>Market Salary Benchmark:</strong> {generated.marketSalaryBenchmark}
+              </p>
+              <p>
+                <strong>Vague Description Detected:</strong> {generated.vagueDetected ? 'Yes' : 'No'}
+              </p>
+              {generated.clarityImprovements.length > 0 && (
+                <>
+                  <p>
+                    <strong>Clarity Improvements:</strong>
+                  </p>
+                  <ul>
+                    {generated.clarityImprovements.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </article>
+          )}
+        </section>
 
         <section className="jobs-insights">
           <div className="jobs-insights-header">
