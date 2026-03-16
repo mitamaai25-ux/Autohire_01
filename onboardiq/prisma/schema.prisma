@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  HR
+  MANAGER
+}
+
+enum MilestoneStatus {
+  COMPLETED
+  PENDING
+  DELAYED
+}
+
+model User {
+  id          String     @id @default(cuid())
+  email       String     @unique
+  name        String
+  role        Role
+  departmentId String?
+  department  Department? @relation(fields: [departmentId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  auditLogs   AuditLog[]
+}
+
+model Department {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  employees   Employee[]
+  users       User[]
+}
+
+model Employee {
+  id                     String              @id @default(cuid())
+  employeeCode           String              @unique
+  fullName               String
+  roleTitle              String
+  startDate              DateTime
+  managerId              String?
+  departmentId           String
+  department             Department          @relation(fields: [departmentId], references: [id])
+  retentionScore         Int                 @default(70)
+  engagementScore        Int                 @default(65)
+  productivityScore      Int                 @default(50)
+  surveyResponses        SurveyResponse[]
+  performanceReviews     PerformanceReview[]
+  complianceRecords      ComplianceRecord[]
+  itProvisions           ITProvision[]
+  onboardingStageEntries EmployeeOnboardingStage[]
+  createdAt              DateTime            @default(now())
+  updatedAt              DateTime            @updatedAt
+}
+
+model OnboardingStage {
+  id          String                    @id @default(cuid())
+  name        String
+  order       Int
+  slaHours    Int
+  entries     EmployeeOnboardingStage[]
+}
+
+model EmployeeOnboardingStage {
+  id                 String          @id @default(cuid())
+  employeeId         String
+  stageId            String
+  status             MilestoneStatus @default(PENDING)
+  completedAt        DateTime?
+  expectedCompletion DateTime
+  employee           Employee        @relation(fields: [employeeId], references: [id])
+  stage              OnboardingStage @relation(fields: [stageId], references: [id])
+}
+
+model PerformanceReview {
+  id            String   @id @default(cuid())
+  employeeId    String
+  reviewDate    DateTime
+  productivity  Int
+  managerNotes  String
+  employee      Employee @relation(fields: [employeeId], references: [id])
+}
+
+model SurveyResponse {
+  id            String   @id @default(cuid())
+  employeeId    String
+  submittedAt   DateTime @default(now())
+  isAnonymous   Boolean  @default(false)
+  sentiment     String
+  enpsScore     Int
+  feedback      String
+  employee      Employee @relation(fields: [employeeId], references: [id])
+}
+
+model ITProvision {
+  id                  String   @id @default(cuid())
+  employeeId          String
+  deviceProvisionedAt DateTime?
+  accountReadyAt      DateTime?
+  status              String
+  employee            Employee @relation(fields: [employeeId], references: [id])
+}
+
+model ComplianceRecord {
+  id                String   @id @default(cuid())
+  employeeId        String
+  docsComplete      Boolean  @default(false)
+  backgroundCheck   Boolean  @default(false)
+  verificationNotes String
+  sensitivePayload  String
+  employee          Employee @relation(fields: [employeeId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String
+  action     String
+  entityType String
+  entityId   String
+  metadata   String?
+  createdAt  DateTime @default(now())
+  actor      User     @relation(fields: [actorId], references: [id])
+}

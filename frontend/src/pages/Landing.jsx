@@ -124,8 +124,6 @@ function Landing() {
           <Link to="/resume-scoring">Resume Scoring</Link>
           <Link to="/jobs">Jobs</Link>
           <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
-          <Link to="/freelancer-dashboard">Freelancer Dashboard</Link>
-          <Link to="/enterprise-dashboard">Enterprise Dashboard</Link>
           <Link to="/login">Login</Link>
         </nav>
       </header>

@@ -120,58 +120,7 @@ app.get('/api/dashboard', authMiddleware, (req, res) => {
   });
 });
 
-// Freelancer dashboard metrics (dummy data for demo)
-const freelancerDashboardData = {
-  profileScore: 87,
-  profileScoreBreakdown: { skillMatch: 42, completeness: 45 },
-  successRatio: { applications: 48, interviews: 12 },
-  responseTime: { value: 2.4, unit: 'hours', label: 'Avg. response time' },
-  projects: { accepted: 24, completed: 22 },
-  trustIndicator: 92,
-  clientRating: { weighted: 4.7, outOf: 5, totalReviews: 18 },
-  aiWeightedReviews: {
-    score: 4.8,
-    summary: 'Strong consistency across delivery and communication.',
-    highlights: [
-      { text: 'On-time delivery', weight: 0.95 },
-      { text: 'Communication clarity', weight: 0.92 },
-      { text: 'Scope adherence', weight: 0.88 },
-      { text: 'Technical quality', weight: 0.94 },
-    ],
-  },
-};
 
-app.get('/api/freelancer-dashboard', (_req, res) => {
-  res.json(freelancerDashboardData);
-});
-
-// Enterprise dashboard metrics (dummy data for demo)
-const enterpriseDashboardData = {
-  openRequisitions: 24,
-  filledThisQuarter: 18,
-  avgTimeToHireDays: 28,
-  offerAcceptanceRate: 72,
-  pipeline: {
-    open: 24,
-    shortlisted: 14,
-    interview: 8,
-    offered: 5,
-    filled: 3,
-  },
-  requisitionHealth: {
-    filled: 18,
-    inProgress: 12,
-    onHold: 4,
-    open: 10,
-  },
-  budgetUtilizationPercent: 78,
-  qualityOfHireScore: 4.2,
-  diversityIndex: 0.68,
-};
-
-app.get('/api/enterprise-dashboard', (_req, res) => {
-  res.json(enterpriseDashboardData);
-});
 
 app.post('/api/resume-score', (req, res) => {
   try {

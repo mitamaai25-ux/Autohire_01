@@ -54,6 +54,7 @@ function Home() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('projects');
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
@@ -88,8 +89,19 @@ function Home() {
             <Link className="side-link" to="/">
               Home
             </Link>
-            <button className="side-item active" type="button">
+            <button
+              className={`side-item ${activeWorkspaceTab === 'projects' ? 'active' : ''}`}
+              onClick={() => setActiveWorkspaceTab('projects')}
+              type="button"
+            >
               Projects
+            </button>
+            <button
+              className={`side-item ${activeWorkspaceTab === 'new-project' ? 'active' : ''}`}
+              onClick={() => setActiveWorkspaceTab('new-project')}
+              type="button"
+            >
+              New Project
             </button>
             <button className="side-item" onClick={() => navigate('/jobs')} type="button">
               Jobs
@@ -111,47 +123,84 @@ function Home() {
         </aside>
 
         <section className="workspace-main">
-          <h1>Welcome back 👋</h1>
-          <p className="subtitle">Ready to create something amazing?</p>
+          {activeWorkspaceTab === 'new-project' ? (
+            <section className="new-project-shell">
+              <header className="new-project-topbar">
+                <h2>New Project Workspace</h2>
+                <button className="btn btn-secondary" type="button">
+                  Export
+                </button>
+              </header>
 
-          <div className="workspace-actions">
-            <article className="action-card">
-              <h3>New Project</h3>
-              <p>Start editing a new video</p>
-            </article>
-            <article className="action-card upload">
-              <h3>Upload Video</h3>
-              <p>Drag & drop or click to browse</p>
-            </article>
-          </div>
-
-          <section>
-            <h2 className="workspace-title">AI Suggestions</h2>
-            <div className="tips-grid">
-              {aiSuggestions.map((tip) => (
-                <article className="tip-card" key={tip}>
-                  {tip}
-                </article>
-              ))}
-            </div>
-          </section>
-
-          <section>
-            <h2 className="workspace-title">Recent Projects</h2>
-            <div className="recent-grid">
-              {recentProjects.map((project) => (
-                <article className="project-card" key={project.title}>
-                  <div className="project-thumb">
-                    <span>{project.time}</span>
+              <div className="new-project-layout">
+                <aside className="mentor-panel">
+                  <div className="mentor-head">
+                    <strong>AI Mentor</strong>
+                    <span>Online</span>
                   </div>
-                  <div className="project-info">
-                    <h4>{project.title}</h4>
-                    <p>{project.meta}</p>
+                  <p>
+                    Hi! I&apos;m your AI editing mentor. Upload a video and describe your goal to start your
+                    new project.
+                  </p>
+                  <textarea rows={4} placeholder="Describe your edit objective..." />
+                </aside>
+
+                <article className="editor-panel">
+                  <div className="editor-dropzone">
+                    <h3>No video loaded</h3>
+                    <p>Upload a video to get started</p>
+                    <button className="btn btn-primary" type="button">
+                      Upload Video
+                    </button>
                   </div>
                 </article>
-              ))}
-            </div>
-          </section>
+              </div>
+            </section>
+          ) : (
+            <>
+              <h1>Welcome back 👋</h1>
+              <p className="subtitle">Ready to create something amazing?</p>
+
+              <div className="workspace-actions">
+                <article className="action-card">
+                  <h3>New Project</h3>
+                  <p>Start editing a new video</p>
+                </article>
+                <article className="action-card upload">
+                  <h3>Upload Video</h3>
+                  <p>Drag & drop or click to browse</p>
+                </article>
+              </div>
+
+              <section>
+                <h2 className="workspace-title">AI Suggestions</h2>
+                <div className="tips-grid">
+                  {aiSuggestions.map((tip) => (
+                    <article className="tip-card" key={tip}>
+                      {tip}
+                    </article>
+                  ))}
+                </div>
+              </section>
+
+              <section>
+                <h2 className="workspace-title">Recent Projects</h2>
+                <div className="recent-grid">
+                  {recentProjects.map((project) => (
+                    <article className="project-card" key={project.title}>
+                      <div className="project-thumb">
+                        <span>{project.time}</span>
+                      </div>
+                      <div className="project-info">
+                        <h4>{project.title}</h4>
+                        <p>{project.meta}</p>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            </>
+          )}
         </section>
       </main>
     );
