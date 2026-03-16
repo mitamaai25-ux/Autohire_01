@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  @apply bg-slate-50 text-slate-900 dark:bg-[#011425] dark:text-white;
+}
+
+.card {
+  @apply rounded-2xl bg-white dark:bg-[#242424] shadow-soft border border-slate-200 dark:border-[#5C7C89]/40;
+}
