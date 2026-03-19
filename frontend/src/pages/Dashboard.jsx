@@ -6,6 +6,7 @@ function Dashboard() {
   const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -15,11 +16,16 @@ function Dashboard() {
         return;
       }
 
+      setLoading(true);
+
       try {
         const payload = await getDashboardData(token);
         setData(payload);
       } catch (loadError) {
+        setData(null);
         setError(loadError.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -42,10 +48,15 @@ function Dashboard() {
           </button>
         </div>
 
-        {error && <p className="error">{error}</p>}
-
-        {!data ? (
+        {error ? (
+          <div>
+            <p className="error">{error}</p>
+            <p className="muted">Please try again after the API is available, or sign in again if your session has expired.</p>
+          </div>
+        ) : loading ? (
           <p>Loading dashboard...</p>
+        ) : !data ? (
+          <p>No dashboard data is available right now.</p>
         ) : (
           <>
             <p className="success">{data.message}</p>
