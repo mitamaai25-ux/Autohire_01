@@ -3,50 +3,57 @@ import { useMemo, useState } from 'react';
 
 const onboardingSteps = [
   {
-    icon: '◎',
-    title: "What's your editing experience?",
-    subtitle: 'This helps me tailor my guidance to your level',
+    icon: '◉',
+    title: 'Who are you onboarding today?',
+    subtitle: 'Choose the primary workspace so we can configure the right hiring and collaboration tools.',
     options: [
-      { name: 'Beginner', desc: 'Just getting started with video editing' },
-      { name: 'Intermediate', desc: 'Comfortable with basic editing tasks' },
-      { name: 'Advanced', desc: 'Experienced editor looking for efficiency' },
-      { name: 'Professional', desc: 'Working professional seeking AI enhancement' },
+      { name: 'Hiring Team', desc: 'Set up recruiters, interview workflows, and approval lanes.' },
+      { name: 'Freelancer', desc: 'Build your profile, portfolio, and payout-ready account.' },
+      { name: 'Agency Partner', desc: 'Manage multiple clients, talent benches, and delivery pods.' },
+      { name: 'Operations Admin', desc: 'Own compliance, onboarding, and workspace governance.' },
     ],
   },
   {
-    icon: '◌',
-    title: 'Which software do you use?',
-    subtitle: "I'll optimize my suggestions for your workflow",
+    icon: '◎',
+    title: 'What type of work will happen on AutoHire?',
+    subtitle: 'We use this to prioritize templates, automation, and job-matching signals.',
     options: [
-      { name: 'Adobe Premiere Pro', desc: 'Industry standard for professionals' },
-      { name: 'Final Cut Pro', desc: 'Optimized for Mac users' },
-      { name: 'DaVinci Resolve', desc: 'Advanced color grading' },
-      { name: 'Other / Multiple', desc: 'I use various tools' },
+      { name: 'Full-time Hiring', desc: 'Permanent roles with structured interview plans and scorecards.' },
+      { name: 'Freelance Projects', desc: 'Short-term engagements, statements of work, and milestones.' },
+      { name: 'Mixed Workforce', desc: 'Blend employees, contractors, and specialist freelancers.' },
+      { name: 'Executive Search', desc: 'High-touch searches with private pipelines and approvals.' },
     ],
   },
   {
     icon: '▣',
-    title: 'What type of content do you create?',
-    subtitle: "I'll prioritize relevant editing techniques",
+    title: 'What should the platform launch first?',
+    subtitle: 'Your answer shapes the first dashboard and the onboarding checklist we generate.',
     options: [
-      { name: 'YouTube Videos', desc: 'Long-form content & vlogs' },
-      { name: 'Shorts & Reels', desc: 'TikTok, Reels, YouTube Shorts' },
-      { name: 'Film & Cinematic', desc: 'Movies, documentaries, ads' },
-      { name: 'Mixed Content', desc: 'Various types of videos' },
+      { name: 'Talent Pipeline', desc: 'Open roles, sourcing campaigns, and recruiter handoffs.' },
+      { name: 'Freelancer Marketplace', desc: 'Profiles, proposals, contracts, and client delivery workflows.' },
+      { name: 'Client & Vendor Onboarding', desc: 'KYC, compliance checks, documentation, and approvals.' },
+      { name: 'Analytics Command Center', desc: 'Hiring velocity, fill rate, freelancer health, and spend visibility.' },
     ],
   },
 ];
 
-const aiSuggestions = [
-  'Try vertical format for better engagement on reels',
-  'Add captions to increase watch time by 40%',
-  'Use cinematic color grading for a professional look',
+const launchChecklist = [
+  'Publish a branded hiring page with open roles and freelance opportunities.',
+  'Invite recruiters, hiring managers, and talent partners into shared workflows.',
+  'Automate contracts, compliance collection, and onboarding milestones.',
 ];
 
-const recentProjects = [
-  { title: 'Summer Vlog 2024', meta: 'Edited 2 hours ago', time: '12:34' },
-  { title: 'Product Review', meta: 'Edited yesterday', time: '8:45' },
-  { title: 'Tutorial Series', meta: 'Edited 3 days ago', time: '15:22' },
+const recentActivity = [
+  { title: 'Senior Product Designer', meta: '6 freelancers shortlisted • Updated 18 min ago', status: 'Shortlisting' },
+  { title: 'Client onboarding: Northstar Labs', meta: 'Compliance pack 92% complete • Updated today', status: 'In review' },
+  { title: 'Mobile team hiring sprint', meta: '3 interviews scheduled • Updated yesterday', status: 'Active' },
+];
+
+const workspaceStats = [
+  { label: 'Open roles', value: '24' },
+  { label: 'Freelancers ready', value: '186' },
+  { label: 'Avg. onboarding SLA', value: '36h' },
+  { label: 'Placements this month', value: '41' },
 ];
 
 function Home() {
@@ -54,7 +61,7 @@ function Home() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('projects');
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('overview');
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
@@ -86,36 +93,36 @@ function Home() {
         <aside className="workspace-sidebar">
           <strong className="brand">AutoHire</strong>
           <nav>
-            <Link className="side-link" to="/">
+            <Link className="side-link" to="/ui">
               Home
             </Link>
             <button
-              className={`side-item ${activeWorkspaceTab === 'projects' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('projects')}
+              className={`side-item ${activeWorkspaceTab === 'overview' ? 'active' : ''}`}
+              onClick={() => setActiveWorkspaceTab('overview')}
               type="button"
             >
-              Projects
+              Overview
             </button>
             <button
-              className={`side-item ${activeWorkspaceTab === 'new-project' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('new-project')}
+              className={`side-item ${activeWorkspaceTab === 'launchpad' ? 'active' : ''}`}
+              onClick={() => setActiveWorkspaceTab('launchpad')}
               type="button"
             >
-              New Project
+              Launchpad
             </button>
             <button className="side-item" onClick={() => navigate('/jobs')} type="button">
-              Jobs
+              Marketplace
             </button>
             <button className="side-item" type="button">
-              AI Studio
+              Talent CRM
             </button>
             <button className="side-item" type="button">
-              Settings
+              Compliance Hub
             </button>
           </nav>
           <article className="pro-box">
-            <h4>Pro Features</h4>
-            <p>Unlock advanced AI optimization</p>
+            <h4>Scale plan</h4>
+            <p>Unlock branded portals, bulk onboarding, and advanced analytics.</p>
             <button className="nav-btn continue" type="button">
               Upgrade
             </button>
@@ -123,34 +130,38 @@ function Home() {
         </aside>
 
         <section className="workspace-main">
-          {activeWorkspaceTab === 'new-project' ? (
+          {activeWorkspaceTab === 'launchpad' ? (
             <section className="new-project-shell">
               <header className="new-project-topbar">
-                <h2>New Project Workspace</h2>
+                <h2>Hiring & onboarding launchpad</h2>
                 <button className="btn btn-secondary" type="button">
-                  Export
+                  Export checklist
                 </button>
               </header>
 
               <div className="new-project-layout">
                 <aside className="mentor-panel">
                   <div className="mentor-head">
-                    <strong>AI Mentor</strong>
-                    <span>Online</span>
+                    <strong>AI onboarding copilot</strong>
+                    <span>Live</span>
                   </div>
                   <p>
-                    Hi! I&apos;m your AI editing mentor. Upload a video and describe your goal to start your
-                    new project.
+                    I&apos;ve prepared a launch checklist based on your onboarding answers. Add priorities,
+                    owners, or target dates to personalize the rollout.
                   </p>
-                  <textarea rows={4} placeholder="Describe your edit objective..." />
+                  <textarea rows={4} placeholder="Add launch notes, target roles, or onboarding requirements..." />
                 </aside>
 
-                <article className="editor-panel">
-                  <div className="editor-dropzone">
-                    <h3>No video loaded</h3>
-                    <p>Upload a video to get started</p>
+                <article className="editor-panel platform-preview-panel">
+                  <div className="editor-dropzone launchpad-preview">
+                    <h3>Workspace launch checklist</h3>
+                    <ul className="launch-checklist">
+                      {launchChecklist.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
                     <button className="btn btn-primary" type="button">
-                      Upload Video
+                      Generate onboarding plan
                     </button>
                   </div>
                 </article>
@@ -158,24 +169,35 @@ function Home() {
             </section>
           ) : (
             <>
-              <h1>Welcome back 👋</h1>
-              <p className="subtitle">Ready to create something amazing?</p>
+              <h1>Welcome to your hiring workspace</h1>
+              <p className="subtitle">
+                Manage recruiting, freelance delivery, and onboarding from one branded operating system.
+              </p>
+
+              <div className="workspace-stat-grid">
+                {workspaceStats.map((stat) => (
+                  <article className="stat-card" key={stat.label}>
+                    <span>{stat.label}</span>
+                    <strong>{stat.value}</strong>
+                  </article>
+                ))}
+              </div>
 
               <div className="workspace-actions">
                 <article className="action-card">
-                  <h3>New Project</h3>
-                  <p>Start editing a new video</p>
+                  <h3>Create a role</h3>
+                  <p>Launch a new opening and route it to recruiters instantly.</p>
                 </article>
                 <article className="action-card upload">
-                  <h3>Upload Video</h3>
-                  <p>Drag & drop or click to browse</p>
+                  <h3>Invite freelancers</h3>
+                  <p>Share your talent portal and collect verified profiles in one place.</p>
                 </article>
               </div>
 
               <section>
-                <h2 className="workspace-title">AI Suggestions</h2>
+                <h2 className="workspace-title">Launch recommendations</h2>
                 <div className="tips-grid">
-                  {aiSuggestions.map((tip) => (
+                  {launchChecklist.map((tip) => (
                     <article className="tip-card" key={tip}>
                       {tip}
                     </article>
@@ -184,12 +206,12 @@ function Home() {
               </section>
 
               <section>
-                <h2 className="workspace-title">Recent Projects</h2>
+                <h2 className="workspace-title">Recent workspace activity</h2>
                 <div className="recent-grid">
-                  {recentProjects.map((project) => (
+                  {recentActivity.map((project) => (
                     <article className="project-card" key={project.title}>
-                      <div className="project-thumb">
-                        <span>{project.time}</span>
+                      <div className="project-thumb status-thumb">
+                        <span>{project.status}</span>
                       </div>
                       <div className="project-info">
                         <h4>{project.title}</h4>
@@ -208,11 +230,11 @@ function Home() {
 
   return (
     <main className="onboarding-page">
-      <section className="onboarding-shell">
+      <section className="onboarding-shell onboarding-shell-wide">
         <header className="onboarding-header">
           <strong className="brand">AutoHire</strong>
           <div className="onboarding-header-actions">
-            <Link className="ghost-btn" to="/">
+            <Link className="ghost-btn" to="/ui">
               ← Home
             </Link>
             <button className="ghost-btn" onClick={handleSkipForNow} type="button">
@@ -227,24 +249,48 @@ function Home() {
           ))}
         </div>
 
-        <p className="step-label">Step {step + 1} of {onboardingSteps.length}</p>
+        <div className="onboarding-content-grid">
+          <section>
+            <p className="step-label">
+              Step {step + 1} of {onboardingSteps.length}
+            </p>
 
-        <div className="onboarding-icon">{active.icon}</div>
-        <h1>{active.title}</h1>
-        <p className="subtitle">{active.subtitle}</p>
+            <div className="onboarding-icon">{active.icon}</div>
+            <h1>{active.title}</h1>
+            <p className="subtitle">{active.subtitle}</p>
 
-        <div className="options-grid">
-          {active.options.map((option) => (
-            <button
-              className={`option-card ${answers[step] === option.name ? 'selected' : ''}`}
-              key={option.name}
-              onClick={() => handleSelect(option.name)}
-              type="button"
-            >
-              <strong>{option.name}</strong>
-              <span>{option.desc}</span>
-            </button>
-          ))}
+            <div className="options-grid">
+              {active.options.map((option) => (
+                <button
+                  className={`option-card ${answers[step] === option.name ? 'selected' : ''}`}
+                  key={option.name}
+                  onClick={() => handleSelect(option.name)}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.desc}</span>
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <aside className="onboarding-side-panel">
+            <p className="badge">Platform preview</p>
+            <h3>What you unlock after onboarding</h3>
+            <ul>
+              <li>Branded hiring funnels for full-time roles and freelance gigs.</li>
+              <li>Automated onboarding flows for clients, candidates, and independent talent.</li>
+              <li>Shared dashboards for recruiting, delivery, finance, and compliance teams.</li>
+            </ul>
+            <div className="preview-answer-stack">
+              {onboardingSteps.map((item, index) => (
+                <article className="preview-answer-card" key={item.title}>
+                  <span>{item.title}</span>
+                  <strong>{answers[index] || 'Waiting for your choice'}</strong>
+                </article>
+              ))}
+            </div>
+          </aside>
         </div>
 
         <footer className="onboarding-footer">
