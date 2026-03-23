@@ -282,6 +282,21 @@ function Landing() {
           ))}
         </div>
       </section>
+
+
+      <footer className="site-footer reveal-up delay-5">
+        <div>
+          <strong>AutoHire</strong>
+          <p>Modern hiring, freelance collaboration, and onboarding in one operating system.</p>
+        </div>
+        <div className="site-footer-links">
+          <Link to="/ui">Home</Link>
+          <Link to="/ui/onboarding">Onboarding</Link>
+          <Link to="/jobs">Marketplace</Link>
+          <Link to="/login">Login</Link>
+        </div>
+      </footer>
+
     </main>
   );
 }
