@@ -116,8 +116,8 @@ function Landing() {
       <header className="top-menu fade-in-down">
         <strong className="brand">AutoHire</strong>
         <nav>
-          <Link to="/">Home</Link>
-          <Link to="/onboarding">Onboarding</Link>
+          <Link to="/ui">UI Home</Link>
+          <Link to="/ui/onboarding">Onboarding</Link>
           <Link to="/jobs">Marketplace</Link>
           <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
           <Link to="/login">Login</Link>
@@ -138,7 +138,7 @@ function Landing() {
             and onboard everyone from candidates to clients with confidence.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-primary" to="/onboarding">
+            <Link className="btn btn-primary" to="/ui/onboarding">
               Start onboarding
             </Link>
             <Link className="btn btn-secondary" to="/register">

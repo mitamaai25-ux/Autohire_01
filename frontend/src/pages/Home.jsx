@@ -93,7 +93,7 @@ function Home() {
         <aside className="workspace-sidebar">
           <strong className="brand">AutoHire</strong>
           <nav>
-            <Link className="side-link" to="/">
+            <Link className="side-link" to="/ui">
               Home
             </Link>
             <button
@@ -234,7 +234,7 @@ function Home() {
         <header className="onboarding-header">
           <strong className="brand">AutoHire</strong>
           <div className="onboarding-header-actions">
-            <Link className="ghost-btn" to="/">
+            <Link className="ghost-btn" to="/ui">
               ← Home
             </Link>
             <button className="ghost-btn" onClick={handleSkipForNow} type="button">

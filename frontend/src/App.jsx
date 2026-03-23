@@ -14,7 +14,9 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/ui" element={<Landing />} />
       <Route path="/onboarding" element={<Home />} />
+      <Route path="/ui/onboarding" element={<Home />} />
       <Route path="/resume-scoring" element={<ResumeScoring />} />
       <Route path="/recruiter-dashboard" element={<RecruiterDashboard />} />
       <Route path="/jobs" element={<Jobs />} />
