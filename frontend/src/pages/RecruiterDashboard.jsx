@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { matchFreelancers } from '../api';
+import { Link } from 'react-router-dom';
+import { getApiHealth, matchFreelancers } from '../api';
 
 function RecruiterDashboard() {
   const [form, setForm] = useState({
@@ -14,6 +15,7 @@ function RecruiterDashboard() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [apiStatus, setApiStatus] = useState({ loading: true, message: 'Checking API connection…', healthy: false });
 
   const payload = useMemo(
     () => ({
@@ -32,6 +34,16 @@ function RecruiterDashboard() {
     [form]
   );
 
+  const checkApiStatus = async () => {
+    setApiStatus({ loading: true, message: 'Checking API connection…', healthy: false });
+    try {
+      const data = await getApiHealth();
+      setApiStatus({ loading: false, message: data.message || 'API connected.', healthy: true });
+    } catch (healthError) {
+      setApiStatus({ loading: false, message: healthError.message, healthy: false });
+    }
+  };
+
   const runMatching = async () => {
     setLoading(true);
     setError('');
@@ -46,6 +58,7 @@ function RecruiterDashboard() {
   };
 
   useEffect(() => {
+    checkApiStatus();
     runMatching();
   }, []);
 
@@ -68,12 +81,29 @@ function RecruiterDashboard() {
   };
 
   return (
-    <main className="page">
+    <main className="page recruiter-page">
       <section className="card recruiter-card">
-        <h2>Recruiter Dashboard — AI-Powered Job Matching Engine</h2>
-        <p className="subtitle">
-          Semantic matching with cosine similarity, auto-suggestions, intelligent filters, and live ranking
-          refresh.
+        <div className="dashboard-header recruiter-header">
+          <div>
+            <p className="badge">Recruiter workspace</p>
+            <h2>Recruiter Dashboard — AI-Powered Job Matching Engine</h2>
+            <p className="subtitle recruiter-subtitle">
+              Semantic matching with cosine similarity, auto-suggestions, intelligent filters, and live ranking
+              refresh.
+            </p>
+          </div>
+          <div className="recruiter-actions">
+            <Link className="btn btn-secondary" to="/ui">
+              Home
+            </Link>
+            <button className="btn btn-secondary" type="button" onClick={checkApiStatus}>
+              Refresh API
+            </button>
+          </div>
+        </div>
+
+        <p className={`api-status ${apiStatus.healthy ? 'healthy' : 'offline'}`}>
+          {apiStatus.loading ? 'Checking API connection…' : apiStatus.message}
         </p>
 
         <form onSubmit={onSubmit}>
@@ -92,7 +122,16 @@ function RecruiterDashboard() {
           <div className="filter-grid">
             <div>
               <label htmlFor="minRating">Min Client Rating</label>
-              <input id="minRating" name="minRating" type="number" step="0.1" min="0" max="5" value={form.minRating} onChange={onChange} />
+              <input
+                id="minRating"
+                name="minRating"
+                type="number"
+                step="0.1"
+                min="0"
+                max="5"
+                value={form.minRating}
+                onChange={onChange}
+              />
             </div>
             <div>
               <label htmlFor="minExperience">Min Experience (years)</label>
@@ -118,9 +157,28 @@ function RecruiterDashboard() {
 
         {result && (
           <section className="match-result">
-            <h3>Auto-suggestions</h3>
-            <p>{result.suggestions.join(' • ') || 'No suggestions available.'}</p>
-            <p className="muted">Last updated: {new Date(result.updatedAt).toLocaleTimeString()}</p>
+            <div className="recruiter-result-header">
+              <div>
+                <h3>Auto-suggestions</h3>
+                <p>{result.suggestions.join(' • ') || 'No suggestions available.'}</p>
+              </div>
+              <p className="muted">Last updated: {new Date(result.updatedAt).toLocaleTimeString()}</p>
+            </div>
+
+            <div className="recruiter-summary-grid">
+              <article>
+                <span>Ranked profiles</span>
+                <strong>{result.rankings.length}</strong>
+              </article>
+              <article>
+                <span>Top match score</span>
+                <strong>{result.rankings[0]?.matchScore || 0}%</strong>
+              </article>
+              <article>
+                <span>Realtime mode</span>
+                <strong>{form.realtime ? 'On' : 'Off'}</strong>
+              </article>
+            </div>
 
             <div className="rankings-grid">
               {result.rankings.map((item) => (
