@@ -10,16 +10,22 @@ export async function AIInsightsPanel() {
   const insights = await generateOnboardingInsights(payload);
 
   return (
-    <section className="card p-4">
-      <h3 className="text-lg font-semibold">AI Insights Panel</h3>
-      <div className="mt-3 grid gap-2 text-sm md:grid-cols-2">
-        <p>Predictive Retention Score: <strong>{payload.retentionScore}/100</strong></p>
-        <p>Early Attrition Risk: <strong>{payload.attritionRisk}</strong></p>
-        <p>Sentiment: <strong className="capitalize">{payload.sentiment}</strong></p>
-        <p>Insight Source: <strong className="uppercase">{insights.source}</strong></p>
+    <section className="card p-6">
+      <div className="flex items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold">AI Insights Brief</h3>
+        <span className="rounded-full border border-slate-200 px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate-600 dark:border-[#5C7C89]/40 dark:text-slate-300">
+          {insights.source} model
+        </span>
       </div>
-      <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">{insights.summary}</p>
-      <ul className="mt-2 list-disc pl-5 text-sm">
+      <div className="mt-4 grid gap-2 text-sm md:grid-cols-2">
+        <p>Predictive retention score: <strong>{payload.retentionScore}/100</strong></p>
+        <p>Early attrition risk: <strong>{payload.attritionRisk}</strong></p>
+        <p>Sentiment trend: <strong className="capitalize">{payload.sentiment}</strong></p>
+        <p>Top skill gaps: <strong>{payload.skillGap.length}</strong></p>
+      </div>
+      <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">{insights.summary}</p>
+      <h4 className="mt-4 text-sm font-semibold">Recommended actions</h4>
+      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
         {insights.recommendations.map((item) => (
           <li key={item}>{item}</li>
         ))}
