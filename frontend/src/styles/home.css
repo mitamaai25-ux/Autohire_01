@@ -1537,3 +1537,93 @@ option {
     flex-direction: column;
   }
 }
+
+
+.workflow-section {
+  max-width: 1100px;
+  margin: 1.8rem auto 0;
+}
+
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+.workflow-card {
+  border: 1px solid rgba(116, 151, 255, 0.32);
+  border-radius: 14px;
+  background: linear-gradient(145deg, rgba(18, 28, 59, 0.86), rgba(11, 19, 42, 0.86));
+  padding: 1rem;
+}
+
+.workflow-card h3,
+.workflow-card h4 {
+  margin-top: 0;
+}
+
+.workflow-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: #afc0ea;
+}
+
+.auth-card-wide,
+.dashboard-card-wide {
+  max-width: 980px;
+}
+
+.auth-card-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(240px, 0.8fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.auth-preview-card {
+  border: 1px solid rgba(137, 172, 255, 0.26);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(109, 153, 255, 0.08);
+}
+
+.auth-preview-card h3 {
+  margin-top: 0;
+}
+
+.auth-preview-card ul {
+  margin: 0;
+  padding-left: 1rem;
+  color: #afc0ea;
+}
+
+.account-type-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+}
+
+.dashboard-page {
+  align-items: start;
+}
+
+.dashboard-stats-grid article span {
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.dashboard-workflow-section {
+  margin-top: 1.2rem;
+}
+
+.workflow-inline-header {
+  text-align: left;
+  margin: 0 0 1rem;
+}
+
+@media (max-width: 900px) {
+  .auth-card-split {
+    grid-template-columns: 1fr;
+  }
+}
