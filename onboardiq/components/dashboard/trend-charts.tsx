@@ -1,6 +1,6 @@
 'use client';
 
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend, CartesianGrid } from 'recharts';
 import { trendSeries } from '@/lib/mock-data';
 
 export function TrendCharts() {
@@ -20,9 +20,16 @@ export function TrendCharts() {
       <div className="h-72">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={trendSeries}>
+            <CartesianGrid strokeDasharray="4 4" strokeOpacity={0.2} />
             <XAxis dataKey="period" />
             <YAxis />
-            <Tooltip />
+            <Tooltip
+              contentStyle={{
+                borderRadius: '0.75rem',
+                border: '1px solid rgba(148, 163, 184, 0.35)',
+                boxShadow: '0 8px 30px rgba(15, 23, 42, 0.12)'
+              }}
+            />
             <Legend />
             <Line type="monotone" dataKey="productivity" stroke="#1F4959" strokeWidth={2} />
             <Line type="monotone" dataKey="retention" stroke="#5C7C89" strokeWidth={2} />
