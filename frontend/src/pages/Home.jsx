@@ -3,50 +3,80 @@ import { useMemo, useState } from 'react';
 
 const onboardingSteps = [
   {
-    icon: '◎',
-    title: "What's your editing experience?",
-    subtitle: 'This helps me tailor my guidance to your level',
+    icon: '◉',
+    title: 'Select onboarding path',
+    subtitle: 'Choose who is joining the platform first so we can load the right setup checklist.',
     options: [
-      { name: 'Beginner', desc: 'Just getting started with video editing' },
-      { name: 'Intermediate', desc: 'Comfortable with basic editing tasks' },
-      { name: 'Advanced', desc: 'Experienced editor looking for efficiency' },
-      { name: 'Professional', desc: 'Working professional seeking AI enhancement' },
+      { name: 'Freelancer Registration', desc: 'Portfolio, rate card, payout setup, and profile completion.' },
+      { name: 'Client Registration', desc: 'Project goals, budget setup, and team permissions.' },
+      { name: 'Recruiter Setup', desc: 'Talent sourcing seats, shortlist views, and AI matching controls.' },
+      { name: 'Admin Enablement', desc: 'Moderation, dispute center, analytics, and CMS controls.' },
     ],
   },
   {
-    icon: '◌',
-    title: 'Which software do you use?',
-    subtitle: "I'll optimize my suggestions for your workflow",
+    icon: '◎',
+    title: 'What should launch in dashboard first?',
+    subtitle: 'This configures the first cards users see after login.',
     options: [
-      { name: 'Adobe Premiere Pro', desc: 'Industry standard for professionals' },
-      { name: 'Final Cut Pro', desc: 'Optimized for Mac users' },
-      { name: 'DaVinci Resolve', desc: 'Advanced color grading' },
-      { name: 'Other / Multiple', desc: 'I use various tools' },
+      { name: 'Freelancer Dashboard', desc: 'Job recommendations, earnings overview, proposal tracker.' },
+      { name: 'Client Dashboard', desc: 'Project overview, talent suggestions, payment summary.' },
+      { name: 'Dual View', desc: 'Switch between freelancer and client dashboard roles.' },
+      { name: 'Admin View', desc: 'Moderation and analytics first with user operations shortcuts.' },
     ],
   },
   {
     icon: '▣',
-    title: 'What type of content do you create?',
-    subtitle: "I'll prioritize relevant editing techniques",
+    title: 'Which operating modules do you need first?',
+    subtitle: 'Pick the area to prioritize in workspace rollout.',
     options: [
-      { name: 'YouTube Videos', desc: 'Long-form content & vlogs' },
-      { name: 'Shorts & Reels', desc: 'TikTok, Reels, YouTube Shorts' },
-      { name: 'Film & Cinematic', desc: 'Movies, documentaries, ads' },
-      { name: 'Mixed Content', desc: 'Various types of videos' },
+      { name: 'Browse Projects / Talent', desc: 'Category, budget, rating filters with Save/Invite/Bid actions.' },
+      { name: 'Project Workspace + Payments', desc: 'Task boards, milestones, chat/files, escrow, and invoices.' },
+      { name: 'Ratings & Disputes', desc: 'Two-way reviews, dispute center, and performance analytics.' },
+      { name: 'Global + Monetization + Learning', desc: 'Language, accessibility, dark mode, plans, boosts, webinars.' },
     ],
   },
 ];
 
-const aiSuggestions = [
-  'Try vertical format for better engagement on reels',
-  'Add captions to increase watch time by 40%',
-  'Use cinematic color grading for a professional look',
+const workflowModules = [
+  {
+    title: 'Home + Auth',
+    items: ['Sign Up / Login', 'Freelancer Registration', 'Client Registration'],
+  },
+  {
+    title: 'Browse Projects / Talent',
+    items: ['Filters: Category, Budget, Rating', 'Save / Invite / Bid', 'AI Match Score'],
+  },
+  {
+    title: 'Project Workspace',
+    items: ['Task Board', 'Milestone Tracker', 'Chat + File Sharing', 'Time Tracker'],
+  },
+  {
+    title: 'Payments',
+    items: ['Escrow Setup', 'Milestone Release', 'Invoice Generator', 'Withdrawal Settings'],
+  },
+  {
+    title: 'Ratings & Reviews',
+    items: ['Two-Way Feedback', 'Dispute Resolution', 'Performance Analytics'],
+  },
+  {
+    title: 'Admin Panel',
+    items: ['User Management', 'Project Moderation', 'Dispute Center', 'Analytics Dashboard', 'CMS'],
+  },
+  {
+    title: 'Global Settings',
+    items: ['Language & Currency', 'Accessibility', 'Dark Mode'],
+  },
+  {
+    title: 'Monetization + Community',
+    items: ['Subscription Tiers', 'Featured Boosts', 'Premium Tools', 'Skill Tests', 'Webinars', 'Forums'],
+  },
 ];
 
-const recentProjects = [
-  { title: 'Summer Vlog 2024', meta: 'Edited 2 hours ago', time: '12:34' },
-  { title: 'Product Review', meta: 'Edited yesterday', time: '8:45' },
-  { title: 'Tutorial Series', meta: 'Edited 3 days ago', time: '15:22' },
+const workspaceStats = [
+  { label: 'Active freelancers', value: '186' },
+  { label: 'Client projects', value: '74' },
+  { label: 'Escrow protected', value: '$412k' },
+  { label: 'Resolution SLA', value: '18h' },
 ];
 
 function Home() {
@@ -54,21 +84,37 @@ function Home() {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
-  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('projects');
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('overview');
+  const [profileSetup, setProfileSetup] = useState({
+    skillCategory: '',
+    portfolioFiles: [],
+    kycVerified: false,
+    emailVerified: false,
+    phoneVerified: false,
+    language: '',
+    availability: '',
+  });
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
-
   const canContinue = useMemo(() => Boolean(answers[step]), [answers, step]);
 
-  const handleSelect = (optionName) => {
-    setAnswers((prev) => ({ ...prev, [step]: optionName }));
-  };
+  const profileCompletion = useMemo(() => {
+    let score = 0;
+    if (profileSetup.skillCategory) score += 20;
+    if (profileSetup.portfolioFiles.length > 0) score += 20;
+    if (profileSetup.kycVerified) score += 15;
+    if (profileSetup.emailVerified) score += 10;
+    if (profileSetup.phoneVerified) score += 10;
+    if (profileSetup.language) score += 10;
+    if (profileSetup.availability) score += 10;
+    score += Math.round((Object.keys(answers).length / onboardingSteps.length) * 5);
+    return Math.min(score, 100);
+  }, [answers, profileSetup]);
 
+  const handleSelect = (optionName) => setAnswers((prev) => ({ ...prev, [step]: optionName }));
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
-  const handleSkipForNow = () => {
-    setCompleted(true);
-  };
+  const handleSkipForNow = () => setCompleted(true);
 
   const handleContinue = () => {
     if (!canContinue) return;
@@ -76,7 +122,6 @@ function Home() {
       setStep((prev) => prev + 1);
       return;
     }
-
     setCompleted(true);
   };
 
@@ -86,36 +131,29 @@ function Home() {
         <aside className="workspace-sidebar">
           <strong className="brand">AutoHire</strong>
           <nav>
-            <Link className="side-link" to="/">
+            <Link className="side-link" to="/ui">
               Home
             </Link>
-            <button
-              className={`side-item ${activeWorkspaceTab === 'projects' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('projects')}
-              type="button"
-            >
-              Projects
-            </button>
-            <button
-              className={`side-item ${activeWorkspaceTab === 'new-project' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('new-project')}
-              type="button"
-            >
-              New Project
-            </button>
+            {['overview', 'modules', 'launchpad'].map((tab) => (
+              <button
+                className={`side-item ${activeWorkspaceTab === tab ? 'active' : ''}`}
+                key={tab}
+                onClick={() => setActiveWorkspaceTab(tab)}
+                type="button"
+              >
+                {tab === 'overview' ? 'Overview' : tab === 'modules' ? 'Workflow Modules' : 'Launchpad'}
+              </button>
+            ))}
             <button className="side-item" onClick={() => navigate('/jobs')} type="button">
-              Jobs
+              Browse Marketplace
             </button>
-            <button className="side-item" type="button">
-              AI Studio
-            </button>
-            <button className="side-item" type="button">
-              Settings
+            <button className="side-item" onClick={() => navigate('/dashboard')} type="button">
+              Open Dashboard
             </button>
           </nav>
           <article className="pro-box">
-            <h4>Pro Features</h4>
-            <p>Unlock advanced AI optimization</p>
+            <h4>Scale plan</h4>
+            <p>Unlock premium tools, featured boosts, and advanced analytics.</p>
             <button className="nav-btn continue" type="button">
               Upgrade
             </button>
@@ -123,34 +161,38 @@ function Home() {
         </aside>
 
         <section className="workspace-main">
-          {activeWorkspaceTab === 'new-project' ? (
+          {activeWorkspaceTab === 'launchpad' ? (
             <section className="new-project-shell">
               <header className="new-project-topbar">
-                <h2>New Project Workspace</h2>
+                <h2>Platform launchpad</h2>
                 <button className="btn btn-secondary" type="button">
-                  Export
+                  Export rollout
                 </button>
               </header>
 
               <div className="new-project-layout">
                 <aside className="mentor-panel">
                   <div className="mentor-head">
-                    <strong>AI Mentor</strong>
-                    <span>Online</span>
+                    <strong>AI rollout copilot</strong>
+                    <span>Live</span>
                   </div>
                   <p>
-                    Hi! I&apos;m your AI editing mentor. Upload a video and describe your goal to start your
-                    new project.
+                    Your onboarding answers have been converted into an execution workflow. Add owners and due dates
+                    for each module to finalize launch.
                   </p>
-                  <textarea rows={4} placeholder="Describe your edit objective..." />
+                  <textarea rows={5} placeholder="Assign leads for dashboard, payments, dispute center, and growth modules..." />
                 </aside>
 
-                <article className="editor-panel">
-                  <div className="editor-dropzone">
-                    <h3>No video loaded</h3>
-                    <p>Upload a video to get started</p>
+                <article className="editor-panel platform-preview-panel">
+                  <div className="editor-dropzone launchpad-preview">
+                    <h3>Onboarding decisions</h3>
+                    <ul className="launch-checklist">
+                      {onboardingSteps.map((item, index) => (
+                        <li key={item.title}>{answers[index] || `${item.title} (pending)`}</li>
+                      ))}
+                    </ul>
                     <button className="btn btn-primary" type="button">
-                      Upload Video
+                      Generate go-live checklist
                     </button>
                   </div>
                 </article>
@@ -158,47 +200,51 @@ function Home() {
             </section>
           ) : (
             <>
-              <h1>Welcome back 👋</h1>
-              <p className="subtitle">Ready to create something amazing?</p>
+              <h1>Workflow-ready onboarding workspace</h1>
+              <p className="subtitle">
+                Operate freelancer, client, admin, payment, and community experiences from one platform blueprint.
+              </p>
 
-              <div className="workspace-actions">
-                <article className="action-card">
-                  <h3>New Project</h3>
-                  <p>Start editing a new video</p>
-                </article>
-                <article className="action-card upload">
-                  <h3>Upload Video</h3>
-                  <p>Drag & drop or click to browse</p>
-                </article>
+              <div className="workspace-stat-grid">
+                {workspaceStats.map((stat) => (
+                  <article className="stat-card" key={stat.label}>
+                    <span>{stat.label}</span>
+                    <strong>{stat.value}</strong>
+                  </article>
+                ))}
               </div>
 
-              <section>
-                <h2 className="workspace-title">AI Suggestions</h2>
-                <div className="tips-grid">
-                  {aiSuggestions.map((tip) => (
-                    <article className="tip-card" key={tip}>
-                      {tip}
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section>
-                <h2 className="workspace-title">Recent Projects</h2>
-                <div className="recent-grid">
-                  {recentProjects.map((project) => (
-                    <article className="project-card" key={project.title}>
-                      <div className="project-thumb">
-                        <span>{project.time}</span>
-                      </div>
-                      <div className="project-info">
-                        <h4>{project.title}</h4>
-                        <p>{project.meta}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
+              {activeWorkspaceTab === 'modules' ? (
+                <section className="workflow-section dashboard-workflow-section">
+                  <div className="workflow-grid">
+                    {workflowModules.map((group) => (
+                      <article className="workflow-card" key={group.title}>
+                        <h3>{group.title}</h3>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ) : (
+                <section className="workflow-section dashboard-workflow-section">
+                  <div className="workflow-grid">
+                    {workflowModules.slice(0, 4).map((group) => (
+                      <article className="workflow-card" key={group.title}>
+                        <h3>{group.title}</h3>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </>
           )}
         </section>
@@ -208,11 +254,11 @@ function Home() {
 
   return (
     <main className="onboarding-page">
-      <section className="onboarding-shell">
+      <section className="onboarding-shell onboarding-shell-wide">
         <header className="onboarding-header">
           <strong className="brand">AutoHire</strong>
           <div className="onboarding-header-actions">
-            <Link className="ghost-btn" to="/">
+            <Link className="ghost-btn" to="/ui">
               ← Home
             </Link>
             <button className="ghost-btn" onClick={handleSkipForNow} type="button">
@@ -227,24 +273,178 @@ function Home() {
           ))}
         </div>
 
-        <p className="step-label">Step {step + 1} of {onboardingSteps.length}</p>
+        <div className="onboarding-content-grid">
+          <section>
+            <p className="step-label">
+              Step {step + 1} of {onboardingSteps.length}
+            </p>
 
-        <div className="onboarding-icon">{active.icon}</div>
-        <h1>{active.title}</h1>
-        <p className="subtitle">{active.subtitle}</p>
+            <div className="onboarding-icon">{active.icon}</div>
+            <h1>{active.title}</h1>
+            <p className="subtitle">{active.subtitle}</p>
 
-        <div className="options-grid">
-          {active.options.map((option) => (
-            <button
-              className={`option-card ${answers[step] === option.name ? 'selected' : ''}`}
-              key={option.name}
-              onClick={() => handleSelect(option.name)}
-              type="button"
-            >
-              <strong>{option.name}</strong>
-              <span>{option.desc}</span>
-            </button>
-          ))}
+            <div className="options-grid">
+              {active.options.map((option) => (
+                <button
+                  className={`option-card ${answers[step] === option.name ? 'selected' : ''}`}
+                  key={option.name}
+                  onClick={() => handleSelect(option.name)}
+                  type="button"
+                >
+                  <strong>{option.name}</strong>
+                  <span>{option.desc}</span>
+                </button>
+              ))}
+            </div>
+
+            <article className="profile-setup-card">
+              <h3>Onboarding & Profile Setup</h3>
+              <p className="muted">Complete these details to improve trust, matching quality, and project readiness.</p>
+
+              <label htmlFor="skillCategory">Skill-based registration (category)</label>
+              <select
+                id="skillCategory"
+                value={profileSetup.skillCategory}
+                onChange={(event) =>
+                  setProfileSetup((prev) => ({
+                    ...prev,
+                    skillCategory: event.target.value,
+                  }))
+                }
+              >
+                <option value="">Select category</option>
+                <option value="design">Design</option>
+                <option value="development">Development</option>
+                <option value="marketing">Marketing</option>
+                <option value="operations">Operations</option>
+                <option value="finance">Finance</option>
+              </select>
+
+              <label htmlFor="portfolioUpload">Portfolio upload (images, videos, documents)</label>
+              <input
+                id="portfolioUpload"
+                type="file"
+                multiple
+                onChange={(event) =>
+                  setProfileSetup((prev) => ({
+                    ...prev,
+                    portfolioFiles: Array.from(event.target.files || []),
+                  }))
+                }
+              />
+
+              <div className="kyc-grid">
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.kycVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        kycVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Identity verification (KYC)
+                </label>
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.emailVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        emailVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Email verification
+                </label>
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.phoneVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        phoneVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Phone verification
+                </label>
+              </div>
+
+              <div className="kyc-grid">
+                <div>
+                  <label htmlFor="language">Language proficiency</label>
+                  <select
+                    id="language"
+                    value={profileSetup.language}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        language: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select language level</option>
+                    <option value="english-c1">English (C1)</option>
+                    <option value="english-b2">English (B2)</option>
+                    <option value="spanish-b2">Spanish (B2)</option>
+                    <option value="hindi-c1">Hindi (C1)</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="availability">Availability settings</label>
+                  <select
+                    id="availability"
+                    value={profileSetup.availability}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        availability: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select availability</option>
+                    <option value="full-time">Full-time availability</option>
+                    <option value="part-time">Part-time availability</option>
+                    <option value="weekends">Weekends only</option>
+                    <option value="on-demand">On-demand / project based</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="profile-progress-wrap" aria-live="polite">
+                <div className="profile-progress-header">
+                  <span>Profile completion progress</span>
+                  <strong>{profileCompletion}%</strong>
+                </div>
+                <div className="profile-progress-track">
+                  <span className="profile-progress-fill" style={{ width: `${profileCompletion}%` }} />
+                </div>
+              </div>
+            </article>
+          </section>
+
+          <aside className="onboarding-side-panel">
+            <p className="badge">Workflow preview</p>
+            <h3>Modules unlocked after onboarding</h3>
+            <ul>
+              <li>Freelancer and client registration with role-aware dashboards.</li>
+              <li>Browse projects/talent with AI match scores and invite/bid actions.</li>
+              <li>Project workspace, payments, disputes, admin panel, and global settings.</li>
+            </ul>
+            <div className="preview-answer-stack">
+              {onboardingSteps.map((item, index) => (
+                <article className="preview-answer-card" key={item.title}>
+                  <span>{item.title}</span>
+                  <strong>{answers[index] || 'Waiting for your choice'}</strong>
+                </article>
+              ))}
+            </div>
+          </aside>
         </div>
 
         <footer className="onboarding-footer">
