@@ -86,55 +86,6 @@ const decisionMetrics = [
 
 const jobRequirements = ['Verified profile', 'Portfolio strength', 'Budget fit', 'Availability', 'Payment readiness'];
 
-const workflowGroups = [
-  {
-    title: 'Home',
-    items: [
-      'Sign Up / Login',
-      'Freelancer Registration',
-      'Client Registration',
-      'Footer navigation',
-    ],
-  },
-  {
-    title: 'Dashboard',
-    items: [
-      'Freelancer Dashboard',
-      'Job Recommendations',
-      'Earnings Overview',
-      'Proposal Tracker',
-      'Profile Completion',
-      'Client Dashboard',
-      'Project Overview',
-      'Talent Suggestions',
-      'Payment Summary',
-    ],
-  },
-  {
-    title: 'Browse Projects / Talent',
-    items: ['Category, budget, and rating filters', 'Save / Invite / Bid actions', 'AI Match Score'],
-  },
-  {
-    title: 'Project Workspace',
-    items: ['Task Board', 'Milestone Tracker', 'Chat + File Sharing', 'Time Tracker'],
-  },
-  {
-    title: 'Payments',
-    items: ['Escrow Setup', 'Milestone Release', 'Invoice Generator', 'Withdrawal Settings'],
-  },
-  {
-    title: 'Ratings & Reviews',
-    items: ['Two-Way Feedback', 'Dispute Resolution', 'Performance Analytics'],
-  },
-  {
-    title: 'Admin Panel',
-    items: ['User Management', 'Project Moderation', 'Dispute Center', 'Analytics Dashboard', 'CMS'],
-  },
-  {
-    title: 'Global Settings + Growth',
-    items: ['Language & Currency', 'Accessibility', 'Dark Mode', 'Subscription Tiers', 'Featured Boosts', 'Premium Tools', 'Skill Tests', 'Webinars', 'Forums'],
-  },
-];
 
 function Landing() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -205,25 +156,6 @@ function Landing() {
         </div>
       </section>
 
-      <section className="workflow-section reveal-up delay-1">
-        <div className="xai-header">
-          <p className="badge">Requested product workflow</p>
-          <h2>Home, dashboards, payments, admin tools, and growth paths mapped into one UI</h2>
-          <p>This structure follows the requested IA so the homepage clearly communicates what the platform supports.</p>
-        </div>
-        <div className="workflow-grid">
-          {workflowGroups.map((group) => (
-            <article className="workflow-card" key={group.title}>
-              <h3>{group.title}</h3>
-              <ul>
-                {group.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-        </div>
-      </section>
 
       <section className="persona-section reveal-up delay-1">
         <div className="xai-header">
