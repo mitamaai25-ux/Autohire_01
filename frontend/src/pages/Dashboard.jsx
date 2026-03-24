@@ -64,6 +64,55 @@ const freelancingModuleSections = [
   },
 ];
 
+
+const clientModuleSections = [
+  {
+    title: 'Project Posting',
+    items: [
+      'AI-assisted job description builder',
+      'Budget & timeline estimator',
+      'Skill tags & category selection',
+      'NDA or contract upload (optional)',
+    ],
+  },
+  {
+    title: 'Talent Discovery',
+    items: [
+      'Smart freelancer recommendations',
+      'Search filters: skills, rating, price, location',
+      'View portfolios and reviews',
+      'Invite freelancers to bid',
+    ],
+  },
+  {
+    title: 'Hiring & Collaboration',
+    items: [
+      'Compare proposals side-by-side',
+      'Set milestones and deadlines',
+      'Real-time chat and file sharing',
+      'Project dashboard with progress tracking',
+    ],
+  },
+  {
+    title: 'Payments & Invoicing',
+    items: [
+      'Escrow funding and milestone release',
+      'Auto-invoice generation',
+      'Payment history and receipts',
+      'Refund and dispute options',
+    ],
+  },
+  {
+    title: 'Team & Enterprise Tools (Optional)',
+    items: [
+      'Multi-user team accounts',
+      'Role-based access: admin, manager, viewer',
+      'Bulk hiring and project cloning',
+      'Analytics dashboard for team performance',
+    ],
+  },
+];
+
 const workspaceGroups = [
   {
     title: 'Browse Projects / Talent',
@@ -213,6 +262,27 @@ function Dashboard() {
                 </div>
                 <div className="workflow-grid">
                   {freelancingModuleSections.map((group) => (
+                    <article className="workflow-card" key={group.title}>
+                      <h4>{group.title}</h4>
+                      <ul>
+                        {group.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {accountType === 'client' && (
+              <section className="workflow-section dashboard-workflow-section">
+                <div className="xai-header workflow-inline-header">
+                  <p className="badge">Client module</p>
+                  <h3>End-to-end client workflow</h3>
+                </div>
+                <div className="workflow-grid">
+                  {clientModuleSections.map((group) => (
                     <article className="workflow-card" key={group.title}>
                       <h4>{group.title}</h4>
                       <ul>
