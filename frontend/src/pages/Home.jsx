@@ -4,56 +4,79 @@ import { useMemo, useState } from 'react';
 const onboardingSteps = [
   {
     icon: '◉',
-    title: 'Who are you onboarding today?',
-    subtitle: 'Choose the primary workspace so we can configure the right hiring and collaboration tools.',
+    title: 'Select onboarding path',
+    subtitle: 'Choose who is joining the platform first so we can load the right setup checklist.',
     options: [
-      { name: 'Hiring Team', desc: 'Set up recruiters, interview workflows, and approval lanes.' },
-      { name: 'Freelancer', desc: 'Build your profile, portfolio, and payout-ready account.' },
-      { name: 'Agency Partner', desc: 'Manage multiple clients, talent benches, and delivery pods.' },
-      { name: 'Operations Admin', desc: 'Own compliance, onboarding, and workspace governance.' },
+      { name: 'Freelancer Registration', desc: 'Portfolio, rate card, payout setup, and profile completion.' },
+      { name: 'Client Registration', desc: 'Project goals, budget setup, and team permissions.' },
+      { name: 'Recruiter Setup', desc: 'Talent sourcing seats, shortlist views, and AI matching controls.' },
+      { name: 'Admin Enablement', desc: 'Moderation, dispute center, analytics, and CMS controls.' },
     ],
   },
   {
     icon: '◎',
-    title: 'What type of work will happen on AutoHire?',
-    subtitle: 'We use this to prioritize templates, automation, and job-matching signals.',
+    title: 'What should launch in dashboard first?',
+    subtitle: 'This configures the first cards users see after login.',
     options: [
-      { name: 'Full-time Hiring', desc: 'Permanent roles with structured interview plans and scorecards.' },
-      { name: 'Freelance Projects', desc: 'Short-term engagements, statements of work, and milestones.' },
-      { name: 'Mixed Workforce', desc: 'Blend employees, contractors, and specialist freelancers.' },
-      { name: 'Executive Search', desc: 'High-touch searches with private pipelines and approvals.' },
+      { name: 'Freelancer Dashboard', desc: 'Job recommendations, earnings overview, proposal tracker.' },
+      { name: 'Client Dashboard', desc: 'Project overview, talent suggestions, payment summary.' },
+      { name: 'Dual View', desc: 'Switch between freelancer and client dashboard roles.' },
+      { name: 'Admin View', desc: 'Moderation and analytics first with user operations shortcuts.' },
     ],
   },
   {
     icon: '▣',
-    title: 'What should the platform launch first?',
-    subtitle: 'Your answer shapes the first dashboard and the onboarding checklist we generate.',
+    title: 'Which operating modules do you need first?',
+    subtitle: 'Pick the area to prioritize in workspace rollout.',
     options: [
-      { name: 'Talent Pipeline', desc: 'Open roles, sourcing campaigns, and recruiter handoffs.' },
-      { name: 'Freelancer Marketplace', desc: 'Profiles, proposals, contracts, and client delivery workflows.' },
-      { name: 'Client & Vendor Onboarding', desc: 'KYC, compliance checks, documentation, and approvals.' },
-      { name: 'Analytics Command Center', desc: 'Hiring velocity, fill rate, freelancer health, and spend visibility.' },
+      { name: 'Browse Projects / Talent', desc: 'Category, budget, rating filters with Save/Invite/Bid actions.' },
+      { name: 'Project Workspace + Payments', desc: 'Task boards, milestones, chat/files, escrow, and invoices.' },
+      { name: 'Ratings & Disputes', desc: 'Two-way reviews, dispute center, and performance analytics.' },
+      { name: 'Global + Monetization + Learning', desc: 'Language, accessibility, dark mode, plans, boosts, webinars.' },
     ],
   },
 ];
 
-const launchChecklist = [
-  'Publish a branded hiring page with open roles and freelance opportunities.',
-  'Invite recruiters, hiring managers, and talent partners into shared workflows.',
-  'Automate contracts, compliance collection, and onboarding milestones.',
-];
-
-const recentActivity = [
-  { title: 'Senior Product Designer', meta: '6 freelancers shortlisted • Updated 18 min ago', status: 'Shortlisting' },
-  { title: 'Client onboarding: Northstar Labs', meta: 'Compliance pack 92% complete • Updated today', status: 'In review' },
-  { title: 'Mobile team hiring sprint', meta: '3 interviews scheduled • Updated yesterday', status: 'Active' },
+const workflowModules = [
+  {
+    title: 'Home + Auth',
+    items: ['Sign Up / Login', 'Freelancer Registration', 'Client Registration'],
+  },
+  {
+    title: 'Browse Projects / Talent',
+    items: ['Filters: Category, Budget, Rating', 'Save / Invite / Bid', 'AI Match Score'],
+  },
+  {
+    title: 'Project Workspace',
+    items: ['Task Board', 'Milestone Tracker', 'Chat + File Sharing', 'Time Tracker'],
+  },
+  {
+    title: 'Payments',
+    items: ['Escrow Setup', 'Milestone Release', 'Invoice Generator', 'Withdrawal Settings'],
+  },
+  {
+    title: 'Ratings & Reviews',
+    items: ['Two-Way Feedback', 'Dispute Resolution', 'Performance Analytics'],
+  },
+  {
+    title: 'Admin Panel',
+    items: ['User Management', 'Project Moderation', 'Dispute Center', 'Analytics Dashboard', 'CMS'],
+  },
+  {
+    title: 'Global Settings',
+    items: ['Language & Currency', 'Accessibility', 'Dark Mode'],
+  },
+  {
+    title: 'Monetization + Community',
+    items: ['Subscription Tiers', 'Featured Boosts', 'Premium Tools', 'Skill Tests', 'Webinars', 'Forums'],
+  },
 ];
 
 const workspaceStats = [
-  { label: 'Open roles', value: '24' },
-  { label: 'Freelancers ready', value: '186' },
-  { label: 'Avg. onboarding SLA', value: '36h' },
-  { label: 'Placements this month', value: '41' },
+  { label: 'Active freelancers', value: '186' },
+  { label: 'Client projects', value: '74' },
+  { label: 'Escrow protected', value: '$412k' },
+  { label: 'Resolution SLA', value: '18h' },
 ];
 
 function Home() {
@@ -65,17 +88,11 @@ function Home() {
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
-
   const canContinue = useMemo(() => Boolean(answers[step]), [answers, step]);
 
-  const handleSelect = (optionName) => {
-    setAnswers((prev) => ({ ...prev, [step]: optionName }));
-  };
-
+  const handleSelect = (optionName) => setAnswers((prev) => ({ ...prev, [step]: optionName }));
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
-  const handleSkipForNow = () => {
-    setCompleted(true);
-  };
+  const handleSkipForNow = () => setCompleted(true);
 
   const handleContinue = () => {
     if (!canContinue) return;
@@ -83,7 +100,6 @@ function Home() {
       setStep((prev) => prev + 1);
       return;
     }
-
     setCompleted(true);
   };
 
@@ -96,33 +112,26 @@ function Home() {
             <Link className="side-link" to="/ui">
               Home
             </Link>
-            <button
-              className={`side-item ${activeWorkspaceTab === 'overview' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('overview')}
-              type="button"
-            >
-              Overview
-            </button>
-            <button
-              className={`side-item ${activeWorkspaceTab === 'launchpad' ? 'active' : ''}`}
-              onClick={() => setActiveWorkspaceTab('launchpad')}
-              type="button"
-            >
-              Launchpad
-            </button>
+            {['overview', 'modules', 'launchpad'].map((tab) => (
+              <button
+                className={`side-item ${activeWorkspaceTab === tab ? 'active' : ''}`}
+                key={tab}
+                onClick={() => setActiveWorkspaceTab(tab)}
+                type="button"
+              >
+                {tab === 'overview' ? 'Overview' : tab === 'modules' ? 'Workflow Modules' : 'Launchpad'}
+              </button>
+            ))}
             <button className="side-item" onClick={() => navigate('/jobs')} type="button">
-              Marketplace
+              Browse Marketplace
             </button>
-            <button className="side-item" type="button">
-              Talent CRM
-            </button>
-            <button className="side-item" type="button">
-              Compliance Hub
+            <button className="side-item" onClick={() => navigate('/dashboard')} type="button">
+              Open Dashboard
             </button>
           </nav>
           <article className="pro-box">
             <h4>Scale plan</h4>
-            <p>Unlock branded portals, bulk onboarding, and advanced analytics.</p>
+            <p>Unlock premium tools, featured boosts, and advanced analytics.</p>
             <button className="nav-btn continue" type="button">
               Upgrade
             </button>
@@ -133,35 +142,35 @@ function Home() {
           {activeWorkspaceTab === 'launchpad' ? (
             <section className="new-project-shell">
               <header className="new-project-topbar">
-                <h2>Hiring & onboarding launchpad</h2>
+                <h2>Platform launchpad</h2>
                 <button className="btn btn-secondary" type="button">
-                  Export checklist
+                  Export rollout
                 </button>
               </header>
 
               <div className="new-project-layout">
                 <aside className="mentor-panel">
                   <div className="mentor-head">
-                    <strong>AI onboarding copilot</strong>
+                    <strong>AI rollout copilot</strong>
                     <span>Live</span>
                   </div>
                   <p>
-                    I&apos;ve prepared a launch checklist based on your onboarding answers. Add priorities,
-                    owners, or target dates to personalize the rollout.
+                    Your onboarding answers have been converted into an execution workflow. Add owners and due dates
+                    for each module to finalize launch.
                   </p>
-                  <textarea rows={4} placeholder="Add launch notes, target roles, or onboarding requirements..." />
+                  <textarea rows={5} placeholder="Assign leads for dashboard, payments, dispute center, and growth modules..." />
                 </aside>
 
                 <article className="editor-panel platform-preview-panel">
                   <div className="editor-dropzone launchpad-preview">
-                    <h3>Workspace launch checklist</h3>
+                    <h3>Onboarding decisions</h3>
                     <ul className="launch-checklist">
-                      {launchChecklist.map((item) => (
-                        <li key={item}>{item}</li>
+                      {onboardingSteps.map((item, index) => (
+                        <li key={item.title}>{answers[index] || `${item.title} (pending)`}</li>
                       ))}
                     </ul>
                     <button className="btn btn-primary" type="button">
-                      Generate onboarding plan
+                      Generate go-live checklist
                     </button>
                   </div>
                 </article>
@@ -169,9 +178,9 @@ function Home() {
             </section>
           ) : (
             <>
-              <h1>Welcome to your hiring workspace</h1>
+              <h1>Workflow-ready onboarding workspace</h1>
               <p className="subtitle">
-                Manage recruiting, freelance delivery, and onboarding from one branded operating system.
+                Operate freelancer, client, admin, payment, and community experiences from one platform blueprint.
               </p>
 
               <div className="workspace-stat-grid">
@@ -183,44 +192,37 @@ function Home() {
                 ))}
               </div>
 
-              <div className="workspace-actions">
-                <article className="action-card">
-                  <h3>Create a role</h3>
-                  <p>Launch a new opening and route it to recruiters instantly.</p>
-                </article>
-                <article className="action-card upload">
-                  <h3>Invite freelancers</h3>
-                  <p>Share your talent portal and collect verified profiles in one place.</p>
-                </article>
-              </div>
-
-              <section>
-                <h2 className="workspace-title">Launch recommendations</h2>
-                <div className="tips-grid">
-                  {launchChecklist.map((tip) => (
-                    <article className="tip-card" key={tip}>
-                      {tip}
-                    </article>
-                  ))}
-                </div>
-              </section>
-
-              <section>
-                <h2 className="workspace-title">Recent workspace activity</h2>
-                <div className="recent-grid">
-                  {recentActivity.map((project) => (
-                    <article className="project-card" key={project.title}>
-                      <div className="project-thumb status-thumb">
-                        <span>{project.status}</span>
-                      </div>
-                      <div className="project-info">
-                        <h4>{project.title}</h4>
-                        <p>{project.meta}</p>
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </section>
+              {activeWorkspaceTab === 'modules' ? (
+                <section className="workflow-section dashboard-workflow-section">
+                  <div className="workflow-grid">
+                    {workflowModules.map((group) => (
+                      <article className="workflow-card" key={group.title}>
+                        <h3>{group.title}</h3>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ) : (
+                <section className="workflow-section dashboard-workflow-section">
+                  <div className="workflow-grid">
+                    {workflowModules.slice(0, 4).map((group) => (
+                      <article className="workflow-card" key={group.title}>
+                        <h3>{group.title}</h3>
+                        <ul>
+                          {group.items.map((item) => (
+                            <li key={item}>{item}</li>
+                          ))}
+                        </ul>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              )}
             </>
           )}
         </section>
@@ -275,12 +277,12 @@ function Home() {
           </section>
 
           <aside className="onboarding-side-panel">
-            <p className="badge">Platform preview</p>
-            <h3>What you unlock after onboarding</h3>
+            <p className="badge">Workflow preview</p>
+            <h3>Modules unlocked after onboarding</h3>
             <ul>
-              <li>Branded hiring funnels for full-time roles and freelance gigs.</li>
-              <li>Automated onboarding flows for clients, candidates, and independent talent.</li>
-              <li>Shared dashboards for recruiting, delivery, finance, and compliance teams.</li>
+              <li>Freelancer and client registration with role-aware dashboards.</li>
+              <li>Browse projects/talent with AI match scores and invite/bid actions.</li>
+              <li>Project workspace, payments, disputes, admin panel, and global settings.</li>
             </ul>
             <div className="preview-answer-stack">
               {onboardingSteps.map((item, index) => (
