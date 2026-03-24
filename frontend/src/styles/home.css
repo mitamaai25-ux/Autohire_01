@@ -36,6 +36,19 @@ body {
   border-radius: 999px;
   padding: 0.3rem 0.7rem;
   font-size: 0.9rem;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.top-menu a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(143, 187, 255, 0.7);
+}
+
+.top-menu .menu-cta {
+  background: linear-gradient(100deg, #5f8bff, #62d6ff);
+  border-color: transparent;
+  color: #0b1737;
+  font-weight: 700;
 }
 
 .landing-page {
@@ -126,6 +139,49 @@ body {
   gap: 0.65rem;
   flex-wrap: wrap;
   margin-top: 1rem;
+}
+
+.hero-meta {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.95rem;
+}
+
+.hero-meta span {
+  border: 1px solid rgba(122, 164, 255, 0.32);
+  border-radius: 999px;
+  padding: 0.32rem 0.65rem;
+  font-size: 0.82rem;
+  color: #c4d7ff;
+  background: rgba(17, 31, 69, 0.62);
+}
+
+.social-proof {
+  max-width: 1100px;
+  margin: 1.4rem auto 0;
+  border: 1px solid rgba(114, 145, 248, 0.26);
+  border-radius: 16px;
+  padding: 1rem 1.1rem;
+  background: linear-gradient(140deg, rgba(10, 19, 45, 0.72), rgba(8, 14, 36, 0.72));
+}
+
+.social-proof-grid {
+  margin-top: 0.7rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.55rem;
+}
+
+.social-proof-grid span {
+  border-radius: 12px;
+  padding: 0.55rem 0.7rem;
+  text-align: center;
+  border: 1px solid rgba(129, 161, 255, 0.3);
+  color: #dce7ff;
+  font-weight: 600;
+  background: rgba(25, 39, 81, 0.65);
 }
 
 
@@ -817,6 +873,15 @@ input {
   padding: 0.75rem 1rem;
   font-weight: 600;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
 }
 
 .btn-primary {
@@ -877,6 +942,10 @@ input {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
+  }
+
+  .hero-card {
+    transform: none;
   }
 
   .workspace-page {
@@ -1391,6 +1460,10 @@ textarea {
     flex-direction: column;
     gap: 0.9rem;
     align-items: flex-start;
+  }
+
+  .hero-actions .btn {
+    width: 100%;
   }
 }
 
