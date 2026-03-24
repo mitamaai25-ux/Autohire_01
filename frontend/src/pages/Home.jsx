@@ -85,10 +85,32 @@ function Home() {
   const [answers, setAnswers] = useState({});
   const [completed, setCompleted] = useState(false);
   const [activeWorkspaceTab, setActiveWorkspaceTab] = useState('overview');
+  const [profileSetup, setProfileSetup] = useState({
+    skillCategory: '',
+    portfolioFiles: [],
+    kycVerified: false,
+    emailVerified: false,
+    phoneVerified: false,
+    language: '',
+    availability: '',
+  });
 
   const active = onboardingSteps[step];
   const isLast = step === onboardingSteps.length - 1;
   const canContinue = useMemo(() => Boolean(answers[step]), [answers, step]);
+
+  const profileCompletion = useMemo(() => {
+    let score = 0;
+    if (profileSetup.skillCategory) score += 20;
+    if (profileSetup.portfolioFiles.length > 0) score += 20;
+    if (profileSetup.kycVerified) score += 15;
+    if (profileSetup.emailVerified) score += 10;
+    if (profileSetup.phoneVerified) score += 10;
+    if (profileSetup.language) score += 10;
+    if (profileSetup.availability) score += 10;
+    score += Math.round((Object.keys(answers).length / onboardingSteps.length) * 5);
+    return Math.min(score, 100);
+  }, [answers, profileSetup]);
 
   const handleSelect = (optionName) => setAnswers((prev) => ({ ...prev, [step]: optionName }));
   const handleBack = () => setStep((prev) => Math.max(prev - 1, 0));
@@ -274,6 +296,136 @@ function Home() {
                 </button>
               ))}
             </div>
+
+            <article className="profile-setup-card">
+              <h3>Onboarding & Profile Setup</h3>
+              <p className="muted">Complete these details to improve trust, matching quality, and project readiness.</p>
+
+              <label htmlFor="skillCategory">Skill-based registration (category)</label>
+              <select
+                id="skillCategory"
+                value={profileSetup.skillCategory}
+                onChange={(event) =>
+                  setProfileSetup((prev) => ({
+                    ...prev,
+                    skillCategory: event.target.value,
+                  }))
+                }
+              >
+                <option value="">Select category</option>
+                <option value="design">Design</option>
+                <option value="development">Development</option>
+                <option value="marketing">Marketing</option>
+                <option value="operations">Operations</option>
+                <option value="finance">Finance</option>
+              </select>
+
+              <label htmlFor="portfolioUpload">Portfolio upload (images, videos, documents)</label>
+              <input
+                id="portfolioUpload"
+                type="file"
+                multiple
+                onChange={(event) =>
+                  setProfileSetup((prev) => ({
+                    ...prev,
+                    portfolioFiles: Array.from(event.target.files || []),
+                  }))
+                }
+              />
+
+              <div className="kyc-grid">
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.kycVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        kycVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Identity verification (KYC)
+                </label>
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.emailVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        emailVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Email verification
+                </label>
+                <label className="check-row">
+                  <input
+                    type="checkbox"
+                    checked={profileSetup.phoneVerified}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        phoneVerified: event.target.checked,
+                      }))
+                    }
+                  />
+                  Phone verification
+                </label>
+              </div>
+
+              <div className="kyc-grid">
+                <div>
+                  <label htmlFor="language">Language proficiency</label>
+                  <select
+                    id="language"
+                    value={profileSetup.language}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        language: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select language level</option>
+                    <option value="english-c1">English (C1)</option>
+                    <option value="english-b2">English (B2)</option>
+                    <option value="spanish-b2">Spanish (B2)</option>
+                    <option value="hindi-c1">Hindi (C1)</option>
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="availability">Availability settings</label>
+                  <select
+                    id="availability"
+                    value={profileSetup.availability}
+                    onChange={(event) =>
+                      setProfileSetup((prev) => ({
+                        ...prev,
+                        availability: event.target.value,
+                      }))
+                    }
+                  >
+                    <option value="">Select availability</option>
+                    <option value="full-time">Full-time availability</option>
+                    <option value="part-time">Part-time availability</option>
+                    <option value="weekends">Weekends only</option>
+                    <option value="on-demand">On-demand / project based</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="profile-progress-wrap" aria-live="polite">
+                <div className="profile-progress-header">
+                  <span>Profile completion progress</span>
+                  <strong>{profileCompletion}%</strong>
+                </div>
+                <div className="profile-progress-track">
+                  <span className="profile-progress-fill" style={{ width: `${profileCompletion}%` }} />
+                </div>
+              </div>
+            </article>
           </section>
 
           <aside className="onboarding-side-panel">
