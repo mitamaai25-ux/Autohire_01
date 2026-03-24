@@ -146,6 +146,15 @@ function Dashboard() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [accountType, setAccountType] = useState(localStorage.getItem('autohire_account_type') || 'freelancer');
+  const [profileSetup, setProfileSetup] = useState({
+    skillCategory: '',
+    portfolioFiles: [],
+    kycVerified: false,
+    emailVerified: false,
+    phoneVerified: false,
+    language: '',
+    availability: '',
+  });
 
   useEffect(() => {
     const loadDashboard = async () => {
@@ -172,6 +181,18 @@ function Dashboard() {
   }, [navigate]);
 
   const cards = useMemo(() => (accountType === 'client' ? clientCards : freelancerCards), [accountType]);
+
+  const profileCompletion = useMemo(() => {
+    let score = 0;
+    if (profileSetup.skillCategory) score += 20;
+    if (profileSetup.portfolioFiles.length > 0) score += 20;
+    if (profileSetup.kycVerified) score += 15;
+    if (profileSetup.emailVerified) score += 10;
+    if (profileSetup.phoneVerified) score += 10;
+    if (profileSetup.language) score += 10;
+    if (profileSetup.availability) score += 15;
+    return Math.min(score, 100);
+  }, [profileSetup]);
 
   const logout = () => {
     localStorage.removeItem('autohire_token');
@@ -234,6 +255,138 @@ function Dashboard() {
                 </article>
               ))}
             </div>
+
+            {accountType === 'freelancer' && (
+              <article className="profile-setup-card dashboard-profile-setup">
+                <h3>Onboarding & Profile Setup</h3>
+                <p className="muted">Complete these details to improve trust, matching quality, and project readiness.</p>
+
+                <label htmlFor="dashSkillCategory">Skill-based registration (category)</label>
+                <select
+                  id="dashSkillCategory"
+                  value={profileSetup.skillCategory}
+                  onChange={(event) =>
+                    setProfileSetup((prev) => ({
+                      ...prev,
+                      skillCategory: event.target.value,
+                    }))
+                  }
+                >
+                  <option value="">Select category</option>
+                  <option value="design">Design</option>
+                  <option value="development">Development</option>
+                  <option value="marketing">Marketing</option>
+                  <option value="operations">Operations</option>
+                  <option value="finance">Finance</option>
+                </select>
+
+                <label htmlFor="dashPortfolioUpload">Portfolio upload (images, videos, documents)</label>
+                <input
+                  id="dashPortfolioUpload"
+                  type="file"
+                  multiple
+                  onChange={(event) =>
+                    setProfileSetup((prev) => ({
+                      ...prev,
+                      portfolioFiles: Array.from(event.target.files || []),
+                    }))
+                  }
+                />
+
+                <div className="kyc-grid">
+                  <label className="check-row">
+                    <input
+                      type="checkbox"
+                      checked={profileSetup.kycVerified}
+                      onChange={(event) =>
+                        setProfileSetup((prev) => ({
+                          ...prev,
+                          kycVerified: event.target.checked,
+                        }))
+                      }
+                    />
+                    Identity verification (KYC)
+                  </label>
+                  <label className="check-row">
+                    <input
+                      type="checkbox"
+                      checked={profileSetup.emailVerified}
+                      onChange={(event) =>
+                        setProfileSetup((prev) => ({
+                          ...prev,
+                          emailVerified: event.target.checked,
+                        }))
+                      }
+                    />
+                    Email verification
+                  </label>
+                  <label className="check-row">
+                    <input
+                      type="checkbox"
+                      checked={profileSetup.phoneVerified}
+                      onChange={(event) =>
+                        setProfileSetup((prev) => ({
+                          ...prev,
+                          phoneVerified: event.target.checked,
+                        }))
+                      }
+                    />
+                    Phone verification
+                  </label>
+                </div>
+
+                <div className="kyc-grid">
+                  <div>
+                    <label htmlFor="dashLanguage">Language proficiency</label>
+                    <select
+                      id="dashLanguage"
+                      value={profileSetup.language}
+                      onChange={(event) =>
+                        setProfileSetup((prev) => ({
+                          ...prev,
+                          language: event.target.value,
+                        }))
+                      }
+                    >
+                      <option value="">Select language level</option>
+                      <option value="english-c1">English (C1)</option>
+                      <option value="english-b2">English (B2)</option>
+                      <option value="spanish-b2">Spanish (B2)</option>
+                      <option value="hindi-c1">Hindi (C1)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="dashAvailability">Availability settings</label>
+                    <select
+                      id="dashAvailability"
+                      value={profileSetup.availability}
+                      onChange={(event) =>
+                        setProfileSetup((prev) => ({
+                          ...prev,
+                          availability: event.target.value,
+                        }))
+                      }
+                    >
+                      <option value="">Select availability</option>
+                      <option value="full-time">Full-time availability</option>
+                      <option value="part-time">Part-time availability</option>
+                      <option value="weekends">Weekends only</option>
+                      <option value="on-demand">On-demand / project based</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="profile-progress-wrap" aria-live="polite">
+                  <div className="profile-progress-header">
+                    <span>Profile completion progress</span>
+                    <strong>{profileCompletion}%</strong>
+                  </div>
+                  <div className="profile-progress-track">
+                    <span className="profile-progress-fill" style={{ width: `${profileCompletion}%` }} />
+                  </div>
+                </div>
+              </article>
+            )}
 
             <section className="workflow-section dashboard-workflow-section">
               <div className="xai-header workflow-inline-header">

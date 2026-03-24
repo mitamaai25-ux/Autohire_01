@@ -1680,3 +1680,8 @@ option {
   display: grid;
   gap: 1rem;
 }
+
+
+.dashboard-profile-setup {
+  margin-top: 1rem;
+}
