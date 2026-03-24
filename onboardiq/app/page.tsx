@@ -2,6 +2,8 @@ import { DashboardFilters } from '@/components/dashboard/filters';
 import { KpiCards } from '@/components/dashboard/kpi-cards';
 import { TrendCharts } from '@/components/dashboard/trend-charts';
 import { AIInsightsPanel } from '@/components/dashboard/ai-insights-panel';
+import { dashboardSummary } from '@/lib/mock-data';
+import { OperationalPanels } from '@/components/dashboard/operational-panels';
 
 export default function OverviewPage() {
   return (
@@ -24,22 +26,13 @@ export default function OverviewPage() {
         </div>
       </header>
       <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        <article className="card p-4">
-          <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Active cohorts</p>
-          <p className="mt-1 text-2xl font-semibold">12</p>
-        </article>
-        <article className="card p-4">
-          <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">New hires in program</p>
-          <p className="mt-1 text-2xl font-semibold">248</p>
-        </article>
-        <article className="card p-4">
-          <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Average onboarding NPS</p>
-          <p className="mt-1 text-2xl font-semibold">+47</p>
-        </article>
-        <article className="card p-4">
-          <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">Manager response SLA</p>
-          <p className="mt-1 text-2xl font-semibold">6.2 hrs</p>
-        </article>
+        {dashboardSummary.map((item) => (
+          <article className="card p-4" key={item.label}>
+            <p className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-300">{item.label}</p>
+            <p className="mt-1 text-2xl font-semibold">{item.value}</p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-300">{item.context}</p>
+          </article>
+        ))}
       </section>
       <section>
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">Performance trends</h2>
@@ -49,13 +42,17 @@ export default function OverviewPage() {
         <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">Operational KPIs</h2>
         <KpiCards />
       </section>
-      <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">Insights and action plan</h2>
-        <TrendCharts />
-      </section>
-      <section>
-        <AIInsightsPanel />
-      </section>
+      <div className="grid gap-4 xl:grid-cols-[2fr,1fr]">
+        <section className="space-y-4">
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">Insights and action plan</h2>
+          <TrendCharts />
+          <AIInsightsPanel />
+        </section>
+        <section>
+          <h2 className="mb-3 text-sm font-semibold uppercase tracking-[0.12em] text-slate-500 dark:text-slate-300">Operational drilldown</h2>
+          <OperationalPanels />
+        </section>
+      </div>
     </div>
   );
 }
