@@ -3,88 +3,138 @@ import { useEffect, useMemo, useState } from 'react';
 
 const features = [
   {
-    title: 'AI Talent Matching',
-    text: 'AutoHire scores employer roles against freelancer skills with explainable AI confidence.',
+    title: 'Recruiting + Freelance Marketplace',
+    text: 'Run client hiring, freelance project delivery, and onboarding from one shared platform.',
   },
   {
-    title: 'Dual Marketplace',
-    text: 'A unified platform where hiring teams and independent experts collaborate in real time.',
+    title: 'Guided Onboarding Journeys',
+    text: 'Launch role-aware onboarding for freelancers, clients, recruiters, and internal teams.',
   },
   {
-    title: '3D Insight Graphs',
-    text: 'Visualize candidate fit, skill adjacency, and delivery probability with immersive analytics.',
+    title: 'Operational Visibility',
+    text: 'Track payments, milestones, profile readiness, and performance analytics in real time.',
   },
 ];
 
 const personas = [
   {
-    id: 'employer',
-    label: 'Employer',
-    previewTitle: 'Employer Command Center',
-    previewItems: ['Candidate fit shortlists', 'Interview readiness score', 'Offer acceptance likelihood'],
+    id: 'client',
+    label: 'Client',
+    previewTitle: 'Client delivery workspace',
+    previewItems: ['Project overview', 'Talent suggestions', 'Payment summary'],
   },
   {
     id: 'freelancer',
     label: 'Freelancer',
-    previewTitle: 'Freelancer Growth Dashboard',
-    previewItems: ['Profile optimization tips', 'Bid win probability', 'Skill demand heatmap'],
+    previewTitle: 'Freelancer growth dashboard',
+    previewItems: ['Job recommendations', 'Earnings overview', 'Proposal tracker'],
   },
   {
     id: 'recruiter',
     label: 'Recruiter',
-    previewTitle: 'Recruiter Pipeline Studio',
-    previewItems: ['Multi-role talent pools', 'Pipeline stage velocity', 'Placement confidence analytics'],
+    previewTitle: 'Recruiter pipeline studio',
+    previewItems: ['Talent pools by role', 'AI match rankings', 'Client-ready shortlists'],
   },
   {
-    id: 'enterprise_hr',
-    label: 'Enterprise HR',
-    previewTitle: 'Enterprise Workforce Intelligence',
-    previewItems: ['Org-wide hiring risk matrix', 'Retention and mobility forecasts', 'Compensation band confidence'],
+    id: 'admin',
+    label: 'Admin',
+    previewTitle: 'Admin operations panel',
+    previewItems: ['User management', 'Dispute center', 'CMS and announcements'],
   },
 ];
 
 const explainablePillars = [
   {
-    title: 'Fairness by Design',
-    text: 'Bias checks continuously evaluate scoring outputs across role, skill, and experience groups.',
+    title: 'Structured onboarding',
+    text: 'Every user journey is broken into clear milestones for registration, verification, setup, and launch.',
   },
   {
-    title: 'Transparent Reasoning',
-    text: 'Each match score includes plain-language factors so employers and freelancers understand rankings.',
+    title: 'Shared collaboration',
+    text: 'Clients, freelancers, recruiters, and admins work inside the same workflow instead of switching tools.',
   },
   {
-    title: 'Privacy-First Intelligence',
-    text: 'Sensitive profile data is minimized, protected, and processed with strict consent-aware controls.',
+    title: 'Decision-ready insights',
+    text: 'Surface the status, risk, payout, and next action for each profile, project, and milestone.',
   },
 ];
 
 const candidates = [
-  { id: 'c1', name: 'Ava Patel', role: 'Full-Stack Engineer' },
-  { id: 'c2', name: 'Liam Chen', role: 'ML Engineer' },
-  { id: 'c3', name: 'Noah Garcia', role: 'Product Designer' },
-  { id: 'c4', name: 'Sara Kim', role: 'Data Analyst' },
-  { id: 'c5', name: 'Mia Johnson', role: 'Frontend Engineer' },
+  { id: 'c1', name: 'Ava Patel', role: 'Product Designer' },
+  { id: 'c2', name: 'Liam Chen', role: 'Data Engineer' },
+  { id: 'c3', name: 'Noah Garcia', role: 'Growth Marketer' },
+  { id: 'c4', name: 'Sara Kim', role: 'Recruiting Coordinator' },
+  { id: 'c5', name: 'Mia Johnson', role: 'Frontend Developer' },
 ];
 
 const decisionMetrics = [
   {
-    title: 'Hiring Risk Index',
-    value: 'Low · 18%',
-    detail: 'Risk engine flags delivery mismatch probability based on prior project volatility.',
+    title: 'Projects launched faster',
+    value: '2.3x',
+    detail: 'Unified sourcing, onboarding, and milestone tools reduce startup delays for clients and freelancers.',
   },
   {
-    title: 'Retention Probability',
-    value: '87%',
-    detail: 'Estimated long-term engagement confidence using behavior and project-fit signals.',
+    title: 'Profile completion',
+    value: '94%',
+    detail: 'Guided registration, reminders, and onboarding checklists keep freelancers and clients moving.',
   },
   {
-    title: 'Salary Confidence',
+    title: 'Escrow confidence',
     value: '91%',
-    detail: 'Compensation recommendation confidence from market bands, role level, and skill depth.',
+    detail: 'Payment setup, milestone release, and invoice tooling keep projects financially organized.',
   },
 ];
 
-const jobRequirements = ['React', 'Node.js', 'Data modeling', 'API design', 'System thinking'];
+const jobRequirements = ['Verified profile', 'Portfolio strength', 'Budget fit', 'Availability', 'Payment readiness'];
+
+const workflowGroups = [
+  {
+    title: 'Home',
+    items: [
+      'Sign Up / Login',
+      'Freelancer Registration',
+      'Client Registration',
+      'Footer navigation',
+    ],
+  },
+  {
+    title: 'Dashboard',
+    items: [
+      'Freelancer Dashboard',
+      'Job Recommendations',
+      'Earnings Overview',
+      'Proposal Tracker',
+      'Profile Completion',
+      'Client Dashboard',
+      'Project Overview',
+      'Talent Suggestions',
+      'Payment Summary',
+    ],
+  },
+  {
+    title: 'Browse Projects / Talent',
+    items: ['Category, budget, and rating filters', 'Save / Invite / Bid actions', 'AI Match Score'],
+  },
+  {
+    title: 'Project Workspace',
+    items: ['Task Board', 'Milestone Tracker', 'Chat + File Sharing', 'Time Tracker'],
+  },
+  {
+    title: 'Payments',
+    items: ['Escrow Setup', 'Milestone Release', 'Invoice Generator', 'Withdrawal Settings'],
+  },
+  {
+    title: 'Ratings & Reviews',
+    items: ['Two-Way Feedback', 'Dispute Resolution', 'Performance Analytics'],
+  },
+  {
+    title: 'Admin Panel',
+    items: ['User Management', 'Project Moderation', 'Dispute Center', 'Analytics Dashboard', 'CMS'],
+  },
+  {
+    title: 'Global Settings + Growth',
+    items: ['Language & Currency', 'Accessibility', 'Dark Mode', 'Subscription Tiers', 'Featured Boosts', 'Premium Tools', 'Skill Tests', 'Webinars', 'Forums'],
+  },
+];
 
 function Landing() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -100,12 +150,9 @@ function Landing() {
     return () => clearInterval(timer);
   }, []);
 
-  const score = useMemo(() => 72 + ((phase * 7) % 26), [phase]);
+  const score = useMemo(() => 76 + ((phase * 5) % 20), [phase]);
   const signal = useMemo(
-    () =>
-      ['Analyzing profile vectors', 'Scoring skill adjacency', 'Predicting delivery confidence'][
-        phase % 3
-      ],
+    () => ['Syncing applicant data', 'Reviewing freelancer readiness', 'Routing onboarding actions'][phase % 3],
     [phase]
   );
 
@@ -119,10 +166,9 @@ function Landing() {
       <header className="top-menu fade-in-down">
         <strong className="brand">AutoHire</strong>
         <nav>
-          <Link to="/">Home</Link>
-          <Link to="/onboarding">Onboarding</Link>
-          <Link to="/resume-scoring">Resume Scoring</Link>
-          <Link to="/jobs">Jobs</Link>
+          <Link to="/ui">UI Home</Link>
+          <Link to="/ui/onboarding">Onboarding</Link>
+          <Link to="/jobs">Marketplace</Link>
           <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
           <Link to="/login">Login</Link>
         </nav>
@@ -135,40 +181,54 @@ function Landing() {
           <span className="orb orb-c" />
         </div>
         <div className="hero-card float-glow">
-          <p className="badge">AutoHire • AI Hiring + Freelancing Intelligence</p>
-          <h1>Futuristic AI-Powered Hiring & Freelancing Platform</h1>
+          <p className="badge">AutoHire • Hiring, Freelancing, Payments, and Onboarding OS</p>
+          <h1>One workflow for freelancer onboarding, client delivery, payments, and marketplace growth.</h1>
           <p>
-            Discover talent like LinkedIn, hire like Upwork, and optimize outcomes with neon-lit AI
-            matching intelligence.
+            AutoHire gives teams and independent talent a single product to register, get matched,
+            collaborate in project workspaces, release milestones, and manage long-term performance.
           </p>
           <div className="hero-actions">
-            <Link className="btn btn-primary" to="/onboarding">
-              Start Onboarding
+            <Link className="btn btn-primary" to="/register?type=freelancer">
+              Freelancer registration
             </Link>
-            <Link className="btn btn-secondary" to="/register">
-              Create Account
+            <Link className="btn btn-secondary" to="/register?type=client">
+              Client registration
             </Link>
             <Link className="btn btn-secondary" to="/login">
-              Sign In
-            </Link>
-            <Link className="btn btn-secondary" to="/resume-scoring">
-              Resume Scoring
+              Login
             </Link>
             <Link className="btn btn-secondary" to="/jobs">
-              Jobs
-            </Link>
-            <Link className="btn btn-secondary" to="/recruiter-dashboard">
-              Recruiter Dashboard
+              Browse marketplace
             </Link>
           </div>
         </div>
       </section>
 
+      <section className="workflow-section reveal-up delay-1">
+        <div className="xai-header">
+          <p className="badge">Requested product workflow</p>
+          <h2>Home, dashboards, payments, admin tools, and growth paths mapped into one UI</h2>
+          <p>This structure follows the requested IA so the homepage clearly communicates what the platform supports.</p>
+        </div>
+        <div className="workflow-grid">
+          {workflowGroups.map((group) => (
+            <article className="workflow-card" key={group.title}>
+              <h3>{group.title}</h3>
+              <ul>
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="persona-section reveal-up delay-1">
         <div className="xai-header">
-          <p className="badge">Persona Selection Flow</p>
-          <h2>Enter as Employer, Freelancer, Recruiter, or Enterprise HR</h2>
-          <p>Choose your role to preview the AI-tailored dashboard experience before onboarding.</p>
+          <p className="badge">One platform, multiple journeys</p>
+          <h2>Designed for clients, freelancers, recruiters, and admins</h2>
+          <p>Select a persona to preview the experience AutoHire can deliver for each stakeholder.</p>
         </div>
 
         <div className="persona-tabs">
@@ -186,7 +246,7 @@ function Landing() {
 
         <article className="persona-preview-card">
           <h3>{personaView.previewTitle}</h3>
-          <p className="persona-preview-sub">Tailored dashboard preview for {personaView.label}</p>
+          <p className="persona-preview-sub">Tailored experience for {personaView.label}</p>
           <ul>
             {personaView.previewItems.map((item) => (
               <li key={item}>{item}</li>
@@ -206,19 +266,18 @@ function Landing() {
 
       <section className="match-sim-section reveal-up delay-3">
         <div className="xai-header">
-          <p className="badge">Real-Time AI Matching Simulation</p>
-          <h2>Dynamic Candidate Graph While AI Evaluates Job Requirements</h2>
+          <p className="badge">Live marketplace activity</p>
+          <h2>See how projects, talent, and onboarding actions move through one system</h2>
           <p>
-            AutoHire continuously recalculates connections between role requirements and candidate strength
-            signals as new evidence arrives.
+            AutoHire connects discovery, matching, onboarding, collaboration, payouts, and review cycles so teams always know the next best action.
           </p>
         </div>
 
         <div className="sim-grid">
           <article className="sim-card network-map">
-            <h3>Live Candidate Connection Map</h3>
+            <h3>Talent + project flow</h3>
             <div className="graph-area">
-              <div className="job-node">Role</div>
+              <div className="job-node">Project</div>
               {candidates.map((candidate, index) => (
                 <div
                   className={`candidate-node ${index === activeIndex ? 'active' : ''}`}
@@ -239,13 +298,13 @@ function Landing() {
           </article>
 
           <article className="sim-card simulation-readout">
-            <h3>AI Evaluation Feed</h3>
+            <h3>Operations feed</h3>
             <p className="pulse">{signal}</p>
             <p>
               Current best fit: <strong>{candidates[activeIndex].name}</strong> — {candidates[activeIndex].role}
             </p>
             <div className="score-wrap">
-              <span>Match Confidence</span>
+              <span>AI match score</span>
               <strong>{score}%</strong>
             </div>
             <ul>
@@ -259,11 +318,10 @@ function Landing() {
 
       <section className="decision-section reveal-up delay-4">
         <div className="xai-header">
-          <p className="badge">AI Decision Assistant</p>
-          <h2>Actionable Hiring Intelligence in Clean Analytics Cards</h2>
+          <p className="badge">Why teams choose AutoHire</p>
+          <h2>A website experience that supports the full freelancer and client lifecycle</h2>
           <p>
-            AutoHire converts match analysis into decision-ready metrics so teams can evaluate risk,
-            retention outlook, and compensation confidence at a glance.
+            From registration and discovery to escrow and reviews, AutoHire turns fragmented workflows into one reliable operating system.
           </p>
         </div>
         <div className="decision-grid">
@@ -279,11 +337,10 @@ function Landing() {
 
       <section className="xai-section reveal-up delay-5">
         <div className="xai-header">
-          <p className="badge">Explainable AI</p>
-          <h2>How AutoHire Evaluates Candidates</h2>
+          <p className="badge">Built for execution</p>
+          <h2>Everything needed to launch hiring, freelancing, payments, and onboarding in one place</h2>
           <p>
-            Our AI engine combines profile relevance, verified skills, delivery history, and role context
-            while preserving fairness, transparency, and privacy-first governance.
+            The experience is designed to look like a modern hiring website while still giving teams the operational depth required to onboard talent and clients at scale.
           </p>
         </div>
         <div className="xai-grid">
@@ -295,6 +352,19 @@ function Landing() {
           ))}
         </div>
       </section>
+
+      <footer className="site-footer reveal-up delay-5">
+        <div>
+          <strong>AutoHire</strong>
+          <p>Modern hiring, freelance collaboration, and onboarding in one operating system.</p>
+        </div>
+        <div className="site-footer-links">
+          <Link to="/ui">Home</Link>
+          <Link to="/ui/onboarding">Onboarding</Link>
+          <Link to="/jobs">Marketplace</Link>
+          <Link to="/login">Login</Link>
+        </div>
+      </footer>
     </main>
   );
 }

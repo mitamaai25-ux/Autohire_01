@@ -23,6 +23,18 @@ function toNetworkError(error, fallbackMessage) {
   return new Error(fallbackMessage);
 }
 
+export async function getApiHealth() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`, {
+      method: 'GET',
+    });
+
+    return await parseJsonResponse(response, 'Could not reach AutoHire API health endpoint.');
+  } catch (error) {
+    throw toNetworkError(error, 'Could not reach AutoHire API health endpoint.');
+  }
+}
+
 export async function registerUser(payload) {
   try {
     const response = await fetch(`${API_BASE_URL}/register`, {
