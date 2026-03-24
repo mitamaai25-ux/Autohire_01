@@ -85,6 +85,7 @@ const decisionMetrics = [
 ];
 
 const jobRequirements = ['Verified profile', 'Portfolio strength', 'Budget fit', 'Availability', 'Payment readiness'];
+const socialProof = ['NovaLabs', 'PixelForge', 'MotiveX', 'PulseStack', 'CloudHarbor'];
 
 
 function Landing() {
@@ -122,7 +123,7 @@ function Landing() {
           <Link to="/jobs">Marketplace</Link>
           <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
           <Link to="/admin">Admin Panel</Link>
-          <Link to="/login">Login</Link>
+          <Link to="/login" className="menu-cta">Login</Link>
         </nav>
       </header>
 
@@ -139,20 +140,34 @@ function Landing() {
             AutoHire gives teams and independent talent a single product to register, get matched,
             collaborate in project workspaces, release milestones, and manage long-term performance.
           </p>
+          <div className="hero-meta">
+            <span>⚡ 3-min profile setup</span>
+            <span>💸 Secure milestone payouts</span>
+            <span>🎯 AI-powered talent matching</span>
+          </div>
           <div className="hero-actions">
             <Link className="btn btn-primary" to="/register?type=freelancer">
-              Freelancer registration
+              Start as freelancer
             </Link>
             <Link className="btn btn-secondary" to="/register?type=client">
-              Client registration
+              Start as client
             </Link>
             <Link className="btn btn-secondary" to="/login">
-              Login
+              Open workspace
             </Link>
             <Link className="btn btn-secondary" to="/jobs">
-              Browse marketplace
+              Explore jobs
             </Link>
           </div>
+        </div>
+      </section>
+
+      <section className="social-proof reveal-up delay-1">
+        <p className="badge">Trusted by growth teams and independent creators</p>
+        <div className="social-proof-grid" aria-label="Partner companies">
+          {socialProof.map((name) => (
+            <span key={name}>{name}</span>
+          ))}
         </div>
       </section>
 
