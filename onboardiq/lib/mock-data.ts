@@ -6,6 +6,13 @@ export const kpis = [
   { label: 'Engagement Score', value: '78/100', change: '+5' }
 ];
 
+export const dashboardSummary = [
+  { label: 'Active Cohorts', value: '12', context: 'Across 4 business units' },
+  { label: 'Employees Onboarding', value: '248', context: '32 started this week' },
+  { label: 'Average Onboarding NPS', value: '+47', context: '+3 points vs prior cycle' },
+  { label: 'Manager Response SLA', value: '6.2 hrs', context: 'Target: <8 hours' }
+];
+
 export const trendSeries = [
   { period: 'Day 30', productivity: 41, retention: 86, attrition: 12 },
   { period: 'Day 60', productivity: 63, retention: 88, attrition: 10 },
@@ -13,6 +20,13 @@ export const trendSeries = [
 ];
 
 export const departments = ['Engineering', 'Sales', 'HR', 'Support'];
+
+export const departmentReadiness = [
+  { department: 'Engineering', completion: 94, risk: 'Low' },
+  { department: 'Sales', completion: 88, risk: 'Moderate' },
+  { department: 'HR', completion: 96, risk: 'Low' },
+  { department: 'Support', completion: 83, risk: 'Moderate' }
+];
 
 export const stageFunnel = [
   { stage: 'Offer Accepted', value: 100 },
