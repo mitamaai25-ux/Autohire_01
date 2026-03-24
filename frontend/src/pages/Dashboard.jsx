@@ -15,6 +15,55 @@ const clientCards = [
   { title: 'Payment Summary', value: '$34k escrowed', detail: 'Track escrow balance, invoices, and milestone releases.' },
 ];
 
+
+const freelancingModuleSections = [
+  {
+    title: 'Job Discovery',
+    items: [
+      'Smart job recommendations (AI-based)',
+      'Advanced filters: category, budget, duration, client rating',
+      'Save jobs for later',
+      'Real-time job alerts',
+    ],
+  },
+  {
+    title: 'Proposal & Bidding',
+    items: [
+      'Custom proposal templates',
+      'AI-suggested bid ranges',
+      'Cover letter assistance',
+      'Proposal tracking: sent, viewed, shortlisted',
+    ],
+  },
+  {
+    title: 'Project Workspace',
+    items: [
+      'Task board with milestones',
+      'Real-time chat with file sharing',
+      'Time tracker (optional)',
+      'Version control for deliverables',
+    ],
+  },
+  {
+    title: 'Payments & Earnings',
+    items: [
+      'Escrow-based payments',
+      'Milestone-based release',
+      'Invoice generation',
+      'Earnings dashboard with filters',
+      'Tax and withdrawal settings',
+    ],
+  },
+  {
+    title: 'Ratings & Reviews',
+    items: [
+      'Two-way feedback system',
+      'Dispute resolution request',
+      'Performance analytics: success rate and response time',
+    ],
+  },
+];
+
 const workspaceGroups = [
   {
     title: 'Browse Projects / Talent',
@@ -155,6 +204,27 @@ function Dashboard() {
                 ))}
               </div>
             </section>
+
+            {accountType === 'freelancer' && (
+              <section className="workflow-section dashboard-workflow-section">
+                <div className="xai-header workflow-inline-header">
+                  <p className="badge">Freelancing module</p>
+                  <h3>End-to-end freelancer workflow</h3>
+                </div>
+                <div className="workflow-grid">
+                  {freelancingModuleSections.map((group) => (
+                    <article className="workflow-card" key={group.title}>
+                      <h4>{group.title}</h4>
+                      <ul>
+                        {group.items.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
           </>
         )}
       </section>

@@ -39,36 +39,57 @@ const onboardingSteps = [
 
 const workflowModules = [
   {
-    title: 'Home + Auth',
-    items: ['Sign Up / Login', 'Freelancer Registration', 'Client Registration'],
+    title: 'Job Discovery',
+    items: [
+      'Smart job recommendations (AI-based)',
+      'Advanced filters: category, budget, duration, client rating',
+      'Save jobs for later',
+      'Real-time job alerts',
+    ],
   },
   {
-    title: 'Browse Projects / Talent',
-    items: ['Filters: Category, Budget, Rating', 'Save / Invite / Bid', 'AI Match Score'],
+    title: 'Proposal & Bidding',
+    items: [
+      'Custom proposal templates',
+      'AI-suggested bid ranges',
+      'Cover letter assistance',
+      'Proposal tracking: sent, viewed, shortlisted',
+    ],
   },
   {
     title: 'Project Workspace',
-    items: ['Task Board', 'Milestone Tracker', 'Chat + File Sharing', 'Time Tracker'],
+    items: [
+      'Task board with milestones',
+      'Real-time chat with file sharing',
+      'Time tracker (optional)',
+      'Version control for deliverables',
+    ],
   },
   {
-    title: 'Payments',
-    items: ['Escrow Setup', 'Milestone Release', 'Invoice Generator', 'Withdrawal Settings'],
+    title: 'Payments & Earnings',
+    items: [
+      'Escrow-based payments',
+      'Milestone-based release',
+      'Invoice generation',
+      'Earnings dashboard with filters',
+      'Tax and withdrawal settings',
+    ],
   },
   {
     title: 'Ratings & Reviews',
-    items: ['Two-Way Feedback', 'Dispute Resolution', 'Performance Analytics'],
+    items: [
+      'Two-way feedback system',
+      'Dispute resolution request',
+      'Performance analytics: job success rate and response time',
+    ],
   },
   {
-    title: 'Admin Panel',
-    items: ['User Management', 'Project Moderation', 'Dispute Center', 'Analytics Dashboard', 'CMS'],
+    title: 'Admin & Global Controls',
+    items: ['User management', 'Project moderation', 'Dispute center', 'Language/currency, accessibility, dark mode'],
   },
   {
-    title: 'Global Settings',
-    items: ['Language & Currency', 'Accessibility', 'Dark Mode'],
-  },
-  {
-    title: 'Monetization + Community',
-    items: ['Subscription Tiers', 'Featured Boosts', 'Premium Tools', 'Skill Tests', 'Webinars', 'Forums'],
+    title: 'Monetization & Community',
+    items: ['Subscription tiers', 'Featured boosts', 'Premium tools', 'Skill tests, webinars, forums'],
   },
 ];
 
