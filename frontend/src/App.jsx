@@ -8,6 +8,7 @@ import ResumeScoring from './pages/ResumeScoring';
 import RecruiterDashboard from './pages/RecruiterDashboard';
 import Jobs from './pages/Jobs';
 import JobsDashboard from './pages/JobsDashboard';
+import AdminPanel from './pages/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
@@ -23,6 +24,14 @@ function App() {
       <Route path="/jobs/dashboard/:mode" element={<JobsDashboard />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute>
+            <AdminPanel />
+          </ProtectedRoute>
+        }
+      />
       <Route
         path="/dashboard"
         element={

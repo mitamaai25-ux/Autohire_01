@@ -170,6 +170,7 @@ function Landing() {
           <Link to="/ui/onboarding">Onboarding</Link>
           <Link to="/jobs">Marketplace</Link>
           <Link to="/recruiter-dashboard">Recruiter Dashboard</Link>
+          <Link to="/admin">Admin Panel</Link>
           <Link to="/login">Login</Link>
         </nav>
       </header>
@@ -362,6 +363,7 @@ function Landing() {
           <Link to="/ui">Home</Link>
           <Link to="/ui/onboarding">Onboarding</Link>
           <Link to="/jobs">Marketplace</Link>
+          <Link to="/admin">Admin Panel</Link>
           <Link to="/login">Login</Link>
         </div>
       </footer>

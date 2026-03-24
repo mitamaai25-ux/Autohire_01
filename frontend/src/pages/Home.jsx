@@ -171,6 +171,9 @@ function Home() {
             <button className="side-item" onClick={() => navigate('/dashboard')} type="button">
               Open Dashboard
             </button>
+            <button className="side-item" onClick={() => navigate('/admin')} type="button">
+              Admin Panel
+            </button>
           </nav>
           <article className="pro-box">
             <h4>Scale plan</h4>

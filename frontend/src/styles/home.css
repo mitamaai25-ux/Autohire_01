@@ -1674,3 +1674,9 @@ option {
   background: linear-gradient(90deg, #7ad5ff, #3a69f7);
   transition: width 0.2s ease;
 }
+
+
+.admin-panel-card {
+  display: grid;
+  gap: 1rem;
+}
