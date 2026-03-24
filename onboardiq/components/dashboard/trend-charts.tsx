@@ -9,9 +9,9 @@ export function TrendCharts() {
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-lg font-semibold">90-Day Performance Trend</h3>
         <div className="flex gap-2 text-xs">
-          <button className="rounded-lg border border-slate-200 bg-slate-100 px-2 py-1 dark:border-[#5C7C89]/40 dark:bg-slate-700">30D</button>
-          <button className="rounded-lg border border-slate-200 bg-slate-100 px-2 py-1 dark:border-[#5C7C89]/40 dark:bg-slate-700">60D</button>
-          <button className="rounded-lg bg-[#1F4959] px-2 py-1 text-white">90D</button>
+          <button className="rounded-lg border border-slate-200 bg-white px-2 py-1 dark:border-[#5C7C89]/40 dark:bg-[#011425]">30D</button>
+          <button className="rounded-lg border border-slate-200 bg-white px-2 py-1 dark:border-[#5C7C89]/40 dark:bg-[#011425]">60D</button>
+          <button className="rounded-lg border border-[#1F4959]/30 bg-[#1F4959]/10 px-2 py-1 font-medium text-[#1F4959] dark:text-cyan-300">90D</button>
         </div>
       </div>
       <p className="mb-3 text-sm text-slate-600 dark:text-slate-300">

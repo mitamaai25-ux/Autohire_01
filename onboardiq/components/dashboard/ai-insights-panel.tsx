@@ -13,7 +13,7 @@ export async function AIInsightsPanel() {
     <section className="card p-6">
       <div className="flex items-center justify-between gap-3">
         <h3 className="text-lg font-semibold">AI Insights Brief</h3>
-        <span className="rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-700 dark:border-cyan-800/60 dark:bg-cyan-900/20 dark:text-cyan-300">
+        <span className="rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-slate-700 dark:border-[#5C7C89]/40 dark:bg-[#011425] dark:text-slate-300">
           {insights.source} model
         </span>
       </div>
@@ -25,7 +25,7 @@ export async function AIInsightsPanel() {
       </div>
       <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">{insights.summary}</p>
       <h4 className="mt-4 text-sm font-semibold">Recommended actions</h4>
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm marker:text-cyan-500">
+      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm">
         {insights.recommendations.map((item) => (
           <li key={item}>{item}</li>
         ))}
