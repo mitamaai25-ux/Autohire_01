@@ -4,56 +4,68 @@ import { Link } from 'react-router-dom';
 const jobs = [
   {
     id: 'j1',
-    title: 'Frontend Developer',
-    company: 'Nebula Labs',
-    type: 'Part Time',
+    title: 'Founding Frontend Freelancer',
+    company: 'Northstar Hiring Cloud',
+    type: 'Freelance',
     mode: 'Remote',
-    area: 'Bangalore',
+    area: 'Global',
+    budget: '$45-$60/hr',
+    summary: 'Build responsive hiring funnels, candidate portals, and recruiter workspaces.',
   },
   {
     id: 'j2',
-    title: 'Backend Engineer',
-    company: 'Atlas Systems',
+    title: 'Talent Operations Specialist',
+    company: 'BridgeLane People Ops',
     type: 'Full Time',
     mode: 'Hybrid',
-    area: 'Pune',
+    area: 'New York',
+    budget: '$85k-$105k',
+    summary: 'Own onboarding workflows, compliance tasks, and stakeholder activation.',
   },
   {
     id: 'j3',
-    title: 'UI Designer',
-    company: 'Pixel Orbit',
-    type: 'Part Time',
-    mode: 'Online',
-    area: 'Mumbai',
+    title: 'Marketplace Growth Manager',
+    company: 'Orbit Freelance Network',
+    type: 'Full Time',
+    mode: 'Remote',
+    area: 'Austin',
+    budget: '$95k-$120k',
+    summary: 'Grow client demand, freelancer supply, and conversion across the marketplace.',
   },
   {
     id: 'j4',
-    title: 'Product Analyst',
-    company: 'Northstar Data',
-    type: 'Full Time',
-    mode: 'Remote',
-    area: 'Delhi',
+    title: 'Freelance Product Designer',
+    company: 'Launchpad Studio',
+    type: 'Freelance',
+    mode: 'Online',
+    area: 'San Francisco',
+    budget: '$50-$70/hr',
+    summary: 'Design branded onboarding journeys, dashboards, and profile activation flows.',
   },
   {
     id: 'j5',
-    title: 'QA Engineer',
-    company: 'Helio Works',
+    title: 'Recruiting Coordinator',
+    company: 'Atlas Talent Partners',
     type: 'Full Time',
-    mode: 'Online',
-    area: 'Hyderabad',
+    mode: 'Onsite',
+    area: 'Chicago',
+    budget: '$62k-$75k',
+    summary: 'Coordinate interviews, candidate communication, and hiring manager updates.',
   },
   {
     id: 'j6',
-    title: 'Content Strategist',
-    company: 'Echo Creative',
-    type: 'Part Time',
+    title: 'Implementation Freelancer',
+    company: 'AutoHire Success Team',
+    type: 'Freelance',
     mode: 'Hybrid',
-    area: 'Chennai',
+    area: 'Los Angeles',
+    budget: '$55-$80/hr',
+    summary: 'Configure client onboarding, integrations, and launch checklists for new accounts.',
   },
 ];
 
 function Jobs() {
-  const [activeType, setActiveType] = useState('Part Time');
+  const [activeType, setActiveType] = useState('Freelance');
   const [activeMode, setActiveMode] = useState('All');
   const [area, setArea] = useState('');
 
@@ -71,11 +83,22 @@ function Jobs() {
   return (
     <main className="page jobs-page">
       <section className="card jobs-card">
-        <h2>Jobs Dashboard</h2>
-        <p className="subtitle">Browse part-time and full-time jobs by work mode and location area.</p>
+        <div className="dashboard-header jobs-header">
+          <div>
+            <p className="badge">Marketplace</p>
+            <h2>Hiring & Freelance Marketplace</h2>
+            <p className="subtitle">
+              Explore curated freelance engagements and full-time hiring opportunities across recruiting,
+              onboarding, product, and operations teams.
+            </p>
+          </div>
+          <Link className="btn btn-secondary" to="/ui">
+            Home
+          </Link>
+        </div>
 
         <div className="jobs-types" role="tablist" aria-label="Job types">
-          {['Part Time', 'Full Time'].map((type) => (
+          {['Freelance', 'Full Time'].map((type) => (
             <button
               className={`jobs-type-btn ${activeType === type ? 'active' : ''}`}
               key={type}
@@ -95,6 +118,7 @@ function Jobs() {
               <option value="Hybrid">Hybrid</option>
               <option value="Remote">Remote</option>
               <option value="Online">Online</option>
+              <option value="Onsite">Onsite</option>
             </select>
           </div>
           <div>
@@ -132,11 +156,17 @@ function Jobs() {
           ) : (
             filteredJobs.map((job) => (
               <article className="job-item" key={job.id}>
-                <h3>{job.title}</h3>
-                <p>{job.company}</p>
+                <div className="job-item-head">
+                  <div>
+                    <h3>{job.title}</h3>
+                    <p>{job.company}</p>
+                  </div>
+                  <span className="job-budget">{job.budget}</span>
+                </div>
                 <p className="muted">
                   {job.type} • {job.mode} • {job.area}
                 </p>
+                <p>{job.summary}</p>
               </article>
             ))
           )}
